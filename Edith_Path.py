@@ -22,11 +22,22 @@ class MainWindow(QtGui.QWidget):
 		QtGui.QWidget.__init__(self, None)
 		self.resize(400, 350)
 		self.setWindowTitle('Edith Path')
+		self.setProperty("class", "main_window");
 	
 	def buildInterface(self):
 		"""TODO """
-		pathActuel = pathManager.getPATH().split(";")
-		print("\n".join(pathActuel))
+
+		ActuelPATH = self.pathManager.getPATH().split(";")
+
+		labelPlainPATH = QtGui.QLabel("PATH actuel :")
+		labelPlainPATH.setFixedSize(280,20)
+
+		plainPATH = QtGui.QPlainTextEdit("\n".join(ActuelPATH))
+		plainPATH.setFixedSize(380,200)
+		plainPATH.verticalScrollBar().setValue(plainPATH.verticalScrollBar().maximum());
+		plainPATH.setReadOnly(True)
+		plainPATH.setLineWrapMode(QtGui.QPlainTextEdit.NoWrap)
+
 
 		labelChoixDossier = QtGui.QLabel("Choississez un dossier à ajouter au path :")
 		labelChoixDossier.setFixedSize(280,20)
@@ -34,29 +45,47 @@ class MainWindow(QtGui.QWidget):
 		choixDossier = QtGui.QPushButton("Parcourir")
 		choixDossier.setFixedSize(85,25)
 
-
 		cheminDossier = QtGui.QLineEdit()
 		cheminDossier.setFixedSize(380,20)
 
-		layout = QtGui.QVBoxLayout()
-		layout.addWidget(labelChoixDossier)
-		layout.addWidget(choixDossier)
-		layout.addWidget(cheminDossier)
+		validerDossier = QtGui.QPushButton("Valider")
+		validerDossier.setFixedSize(85,25)
 
-		self.setLayout(layout)
+		layoutBoutonValider = QtGui.QHBoxLayout()
+		layoutBoutonValider.addWidget(validerDossier)
+
+		layoutMain = QtGui.QVBoxLayout()
+		layoutMain.addWidget(labelPlainPATH)
+		layoutMain.addWidget(plainPATH)
+		layoutMain.addWidget(labelChoixDossier)
+		layoutMain.addWidget(choixDossier)
+		layoutMain.addWidget(cheminDossier)
+		layoutMain.addLayout(layoutBoutonValider)
+
+		self.setLayout(layoutMain)
 
 		####
-		# Définitions des signaux
+		# Initialisation des signaux
 		####
 		choixDossier.clicked.connect(lambda : self.ouvrirDossierDialogue(cheminDossier))
 		
 
 	def setCustomStyleSheet(self, path):
-		"""TODO """
-		with open(path, 'r') as qssFile:
-			styleSheet = qssFile.read()
-			self.setStyleSheet(styleSheet)
+		""" Application de la feuille de style aux éléments de l'interface. """
 
+		try:
+			with open(path, 'r') as qssFile:
+				styleSheet = qssFile.read()
+				self.setStyleSheet(styleSheet)
+				return self
+		except:
+			print("Le fichier", path, "n'a pas été trouvé.")
+			return self
+
+
+	####
+	# Définition des slots
+	####
 	def ouvrirDossierDialogue(self,lineEdit):
 		""" SLOT : Ouverture de la fenêtre de dialogue de choix d'un dossier """
 
