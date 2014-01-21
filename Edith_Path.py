@@ -18,8 +18,8 @@ class MainWindow(QtGui.QWidget):
 		"""TODO """		
 		self.pathManager = pathManager
 
-
 		QtGui.QWidget.__init__(self, None)
+		
 		self.resize(400, 350)
 		self.setWindowTitle('Edith Path')
 		self.setProperty("class", "main_window");
@@ -27,6 +27,7 @@ class MainWindow(QtGui.QWidget):
 	def buildInterface(self):
 		"""TODO """
 
+		### Affichage de la variable PATH actuelle ###
 		ActuelPATH = self.pathManager.getPATH().split(";")
 
 		labelPlainPATH = QtGui.QLabel("PATH actuel :")
@@ -38,28 +39,34 @@ class MainWindow(QtGui.QWidget):
 		plainPATH.setReadOnly(True)
 		plainPATH.setLineWrapMode(QtGui.QPlainTextEdit.NoWrap)
 
-
+		### Affichage du formulaire de choix du chemin à ajouter au PATH ###
 		labelChoixDossier = QtGui.QLabel("Choississez un dossier à ajouter au path :")
 		labelChoixDossier.setFixedSize(280,20)
 
-		choixDossier = QtGui.QPushButton("Parcourir")
-		choixDossier.setFixedSize(85,25)
+		boutonChoixDossier = QtGui.QPushButton("Parcourir")
+		boutonChoixDossier.setFixedSize(90,25)
 
-		cheminDossier = QtGui.QLineEdit()
-		cheminDossier.setFixedSize(380,20)
+		cheminChoixDossier = QtGui.QLineEdit()
+		cheminChoixDossier.setFixedSize(290,25)
+		# cheminChoixDossier.setReadOnly(True)
 
-		validerDossier = QtGui.QPushButton("Valider")
-		validerDossier.setFixedSize(85,25)
+		layoutChoixDossier = QtGui.QHBoxLayout()
+		layoutChoixDossier.addWidget(boutonChoixDossier)
+		layoutChoixDossier.addWidget(cheminChoixDossier)
+
+		### Affichage du bouton "Valider" ###
+		boutonValiderDossier = QtGui.QPushButton("Valider")
+		boutonValiderDossier.setFixedSize(90,25)
 
 		layoutBoutonValider = QtGui.QHBoxLayout()
-		layoutBoutonValider.addWidget(validerDossier)
+		layoutBoutonValider.addWidget(boutonValiderDossier)
 
+		### Création du layout principal ###
 		layoutMain = QtGui.QVBoxLayout()
 		layoutMain.addWidget(labelPlainPATH)
 		layoutMain.addWidget(plainPATH)
 		layoutMain.addWidget(labelChoixDossier)
-		layoutMain.addWidget(choixDossier)
-		layoutMain.addWidget(cheminDossier)
+		layoutMain.addLayout(layoutChoixDossier)
 		layoutMain.addLayout(layoutBoutonValider)
 
 		self.setLayout(layoutMain)
@@ -67,7 +74,8 @@ class MainWindow(QtGui.QWidget):
 		####
 		# Initialisation des signaux
 		####
-		choixDossier.clicked.connect(lambda : self.ouvrirDossierDialogue(cheminDossier))
+		boutonChoixDossier.clicked.connect(lambda : self.ouvrirDossierDialogue(cheminChoixDossier))
+		boutonValiderDossier.clicked.connect(lambda : self.ajouterCheminPATH(cheminChoixDossier))
 		
 
 	def setCustomStyleSheet(self, path):
@@ -86,11 +94,21 @@ class MainWindow(QtGui.QWidget):
 	####
 	# Définition des slots
 	####
-	def ouvrirDossierDialogue(self,lineEdit):
+	def ouvrirDossierDialogue(self, lineEdit):
 		""" SLOT : Ouverture de la fenêtre de dialogue de choix d'un dossier """
 
 		dossier = QtGui.QFileDialog.getExistingDirectory()
 		lineEdit.setText(dossier)
+
+	def ajouterCheminPATH(self, lineEdit):
+		chemin = lineEdit.text()
+		if os.path.exists(chemin):
+			print(chemin)
+			# self.pathManager.addElementToPATH(chemin)
+			
+			return None
+		else:
+			return None
 
 
 class PathManager:
@@ -102,6 +120,12 @@ class PathManager:
 	def getPATH(self):
 		return winreg.QueryValueEx(self.PATH, 'Path')[0]
 
+	def addElementToPATH(self, element):
+		oldPath = winreg.QueryValueEx(self.PATH, 'Path')[0]
+		newPath = element + ';' + oldPath
+		return newPath
+		# winreg.SetValueEx(self.PATH, 'Path', 0, newPath)			
+		return None
 
 
 
