@@ -11,11 +11,13 @@ from PySide.QtCore import Qt, QFile
 import sys as systeme, winreg, os
 
 
+# Definition de la classe d'affichage de l'interface.
 class MainWindow(QtGui.QWidget):
 	"""TODO """
 
 	def __init__(self, pathManager):
-		"""TODO """		
+		"""TODO """
+
 		self.pathManager = pathManager
 
 		QtGui.QWidget.__init__(self, None)
@@ -23,6 +25,7 @@ class MainWindow(QtGui.QWidget):
 		self.resize(400, 350)
 		self.setWindowTitle('Edith Path')
 		self.setProperty("class", "main_window");
+
 	
 	def buildInterface(self):
 		"""TODO """
@@ -48,7 +51,6 @@ class MainWindow(QtGui.QWidget):
 
 		cheminChoixDossier = QtGui.QLineEdit()
 		cheminChoixDossier.setFixedSize(290,25)
-		# cheminChoixDossier.setReadOnly(True)
 
 		layoutChoixDossier = QtGui.QHBoxLayout()
 		layoutChoixDossier.addWidget(boutonChoixDossier)
@@ -109,16 +111,25 @@ class MainWindow(QtGui.QWidget):
 			return None
 		else:
 			return None
+#####
+# Definition de la classe d'affichage de l'interface.
+#####
 
 
 class PathManager:
 
 	def __init__(self):
 		chemin_cle_registre = r"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
-		self.PATH = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, chemin_cle_registre, 0, winreg.KEY_ALL_ACCESS)	
+		try:
+			self.PATH = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, chemin_cle_registre, 0, winreg.KEY_ALL_ACCESS)	
+		except :
+			self.PATH = None
 
 	def getPATH(self):
-		return winreg.QueryValueEx(self.PATH, 'Path')[0]
+		if(self.PATH != None):
+			return winreg.QueryValueEx(self.PATH, 'Path')[0]
+		return "Le path n'a pas pu être récupéré."
+
 
 	def addElementToPATH(self, element):
 		oldPath = winreg.QueryValueEx(self.PATH, 'Path')[0]
@@ -131,7 +142,12 @@ class PathManager:
 
 # Définition de la fonction "main".
 if __name__ == "__main__":
-	
+
+	if (os.name != 'nt') :
+		print("Vous ne pouvez pas utiliser ce script sur un autre os que Windows")		
+		systeme.exit(os.system("pause"))
+
+
 	pathManager = PathManager()	
 
 	if(len(systeme.argv) == 1):
@@ -145,5 +161,19 @@ if __name__ == "__main__":
 
 		systeme.exit(app.exec_())
 	else:
-		print("mode sans gui")
-		os.system("pause")
+		print("Mode sans gui")	
+
+		lengthArgv = len(systeme.argv)
+		i = 1
+
+		while i < lengthArgv :
+
+			if os.path.exists(systeme.argv[i]):
+				# PathManager.addElementToPATH(systeme.argv[i])	
+				print(systeme.argv[i])
+			else : 
+				print("le chemin spécifié n'existe pas")
+				break
+			i += 1
+
+		systeme.exit(os.system("pause"))
