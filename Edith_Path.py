@@ -147,7 +147,6 @@ if __name__ == "__main__":
 		print("Vous ne pouvez pas utiliser ce script sur un autre os que Windows")		
 		systeme.exit(os.system("pause"))
 
-
 	pathManager = PathManager()	
 
 	if(len(systeme.argv) == 1):
@@ -156,24 +155,23 @@ if __name__ == "__main__":
 		fenetre_principale = MainWindow(pathManager)
 		fenetre_principale.buildInterface()		
 		fenetre_principale.setCustomStyleSheet("style.qss");
-
 		fenetre_principale.show()
 
 		systeme.exit(app.exec_())
 	else:
-		print("Mode sans gui")	
+		print("CLI Mode")
 
 		lengthArgv = len(systeme.argv)
 		i = 1
 
 		while i < lengthArgv :
-
 			if os.path.exists(systeme.argv[i]):
 				# PathManager.addElementToPATH(systeme.argv[i])	
 				print(systeme.argv[i])
 			else : 
 				print("le chemin spécifié n'existe pas")
 				break
+				
 			i += 1
 
 		systeme.exit(os.system("pause"))
