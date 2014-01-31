@@ -82,7 +82,7 @@ class MainWindow(QtGui.QWidget):
 		# Initialisation des signaux
 		####
 		boutonChoixDossier.clicked.connect(lambda : self.ouvrirDossierDialogue(cheminChoixDossier))
-		boutonValiderDossier.clicked.connect(lambda : self.ajouterCheminPATH(cheminChoixDossier, labelMessage))
+		boutonValiderDossier.clicked.connect(lambda : self.ajouterCheminPATH(cheminChoixDossier, labelMessage, plainPATH))
 		
 
 	def setCustomStyleSheet(self, path):
@@ -107,14 +107,16 @@ class MainWindow(QtGui.QWidget):
 		dossier = QtGui.QFileDialog.getExistingDirectory()
 		lineEdit.setText(dossier)
 
-	def ajouterCheminPATH(self, lineEdit, labelMessage):
+	def ajouterCheminPATH(self, lineEdit, labelMessage, plainPATH):
 		chemin = lineEdit.text()
 		if os.path.exists(chemin):
-			isElementAdded = self.pathManager.addElementToPATH(chemin)
-			if isElementAdded:
-				labelMessage.setText("L'élément a été correctement ajouté au PATH.")
-			else :
+			newPath = self.pathManager.addElementToPATH(chemin)
+			if not newPath:
 				labelMessage.setText("L'élément n'a pas pu être ajouté au PATH.")
+			else :
+				labelMessage.setText("L'élément a été correctement ajouté au PATH.")
+				newPath = newPath.split(";")
+				plainPATH.setPlainText("\n".join(newPath))
 
 			return None
 		else:
@@ -148,10 +150,9 @@ class PathManager:
 	def addElementToPATH(self, element):
 		oldPath = winreg.QueryValueEx(self.PATH, 'Path')[0]
 		newPath = element + ';' + oldPath
-		print(newPath)
 		try:
 			# winreg.SetValueEx(self.PATH, 'Path', 0, newPath)	
-			return True			
+			return newPath			
 		except :
 			return False	
 #####
