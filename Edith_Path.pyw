@@ -3,7 +3,6 @@
 """ Edith Path by punkka
 
 	On crée une fenêtre simple qui permet d'ajouter un dossier au path global.
-	Test ssh
 """
 
 # On importe Qt
@@ -152,7 +151,8 @@ class PathManager:
 		oldPath = winreg.QueryValueEx(self.PATH, 'Path')[0]
 		newPath = element + ';' + oldPath
 		try:
-			# winreg.SetValueEx(self.PATH, 'Path', 0, newPath)	
+			winreg.SetValueEx(self.PATH, 'Path', 0, winreg.REG_EXPAND_SZ, newPath)
+			self.PATH.Close()
 			return newPath			
 		except :
 			return False	
