@@ -4,7 +4,7 @@ import sys
 from cx_Freeze import setup, Executable
 
 base = None
-includefiles = ['style.qss']
+includefiles = ['style.qss','Edith_Path.exe.manifest']
 
 if sys.platform == "win64":
 	base = "Win64GUI"
