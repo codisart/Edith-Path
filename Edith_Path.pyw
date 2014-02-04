@@ -3,6 +3,7 @@
 """ Edith Path by punkka
 
 	On crée une fenêtre simple qui permet d'ajouter un dossier au path global.
+	Test ssh
 """
 
 # On importe Qt
