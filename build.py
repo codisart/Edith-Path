@@ -16,5 +16,5 @@ setup(
 	version = "0.2",
 	description = "L'édition du PATH tout simplement.",
 	options = {'build_exe': {'include_files':includefiles}}, 
-	executables = [Executable("Edith_Path.py", base = base)],
+	executables = [Executable("Edith_Path.pyw", base = base)],
 )

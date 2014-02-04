@@ -3,6 +3,7 @@
 """ Edith Path by punkka
 
 	On crée une fenêtre simple qui permet d'ajouter un dossier au path global.
+	Test ssh
 """
 
 # On importe Qt
@@ -22,7 +23,7 @@ class MainWindow(QtGui.QWidget):
 
 		QtGui.QWidget.__init__(self, None)
 		
-		self.resize(400, 350)
+		self.resize(500, 400)
 		self.setWindowTitle('Edith Path')
 		self.setProperty("class", "main_window");
 
@@ -34,23 +35,23 @@ class MainWindow(QtGui.QWidget):
 		ActuelPATH = self.pathManager.getPATH().split(";")
 
 		labelPlainPATH = QtGui.QLabel("PATH actuel :")
-		labelPlainPATH.setFixedSize(280,20)
+		labelPlainPATH.setFixedSize(380,20)
 
 		plainPATH = QtGui.QPlainTextEdit("\n".join(ActuelPATH))
-		plainPATH.setFixedSize(380,200)
+		plainPATH.setFixedSize(480,200)
 		plainPATH.verticalScrollBar().setValue(plainPATH.verticalScrollBar().maximum());
 		plainPATH.setReadOnly(True)
 		plainPATH.setLineWrapMode(QtGui.QPlainTextEdit.NoWrap)
 
 		### Affichage du formulaire de choix du chemin à ajouter au PATH ###
 		labelChoixDossier = QtGui.QLabel("Choississez un dossier à ajouter au path :")
-		labelChoixDossier.setFixedSize(280,20)
+		labelChoixDossier.setFixedSize(380,20)
 
 		boutonChoixDossier = QtGui.QPushButton("Parcourir")
 		boutonChoixDossier.setFixedSize(90,25)
 
 		cheminChoixDossier = QtGui.QLineEdit()
-		cheminChoixDossier.setFixedSize(290,25)
+		cheminChoixDossier.setFixedSize(390,25)
 
 		layoutChoixDossier = QtGui.QHBoxLayout()
 		layoutChoixDossier.addWidget(boutonChoixDossier)
@@ -63,6 +64,10 @@ class MainWindow(QtGui.QWidget):
 		layoutBoutonValider = QtGui.QHBoxLayout()
 		layoutBoutonValider.addWidget(boutonValiderDossier)
 
+		labelMessage = QtGui.QLabel()
+		labelMessage.setFixedSize(480,20)
+
+
 		### Création du layout principal ###
 		layoutMain = QtGui.QVBoxLayout()
 		layoutMain.addWidget(labelPlainPATH)
@@ -70,6 +75,7 @@ class MainWindow(QtGui.QWidget):
 		layoutMain.addWidget(labelChoixDossier)
 		layoutMain.addLayout(layoutChoixDossier)
 		layoutMain.addLayout(layoutBoutonValider)
+		layoutMain.addWidget(labelMessage)
 
 		self.setLayout(layoutMain)
 
@@ -77,7 +83,7 @@ class MainWindow(QtGui.QWidget):
 		# Initialisation des signaux
 		####
 		boutonChoixDossier.clicked.connect(lambda : self.ouvrirDossierDialogue(cheminChoixDossier))
-		boutonValiderDossier.clicked.connect(lambda : self.ajouterCheminPATH(cheminChoixDossier))
+		boutonValiderDossier.clicked.connect(lambda : self.ajouterCheminPATH(cheminChoixDossier, labelMessage, plainPATH))
 		
 
 	def setCustomStyleSheet(self, path):
@@ -102,21 +108,32 @@ class MainWindow(QtGui.QWidget):
 		dossier = QtGui.QFileDialog.getExistingDirectory()
 		lineEdit.setText(dossier)
 
-	def ajouterCheminPATH(self, lineEdit):
+	def ajouterCheminPATH(self, lineEdit, labelMessage, plainPATH):
 		chemin = lineEdit.text()
 		if os.path.exists(chemin):
-			print(chemin)
-			# self.pathManager.addElementToPATH(chemin)
-			
+			newPath = self.pathManager.addElementToPATH(chemin)
+			if not newPath:
+				labelMessage.setText("L'élément n'a pas pu être ajouté au PATH.")
+			else :
+				labelMessage.setText("L'élément a été correctement ajouté au PATH.")
+				newPath = newPath.split(";")
+				plainPATH.setPlainText("\n".join(newPath))
+
 			return None
 		else:
+			labelMessage.setText("L'élément saisi n'est pas un chemin valide.")
 			return None
 #####
-# Definition de la classe d'affichage de l'interface.
+# Fin : Definition de la classe d'affichage de l'interface.
 #####
 
 
+
+#####
+# Debut : Definition de la classe de gestion du PATH.
+#####
 class PathManager:
+	""" TODO """
 
 	def __init__(self):
 		chemin_cle_registre = r"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
@@ -134,9 +151,14 @@ class PathManager:
 	def addElementToPATH(self, element):
 		oldPath = winreg.QueryValueEx(self.PATH, 'Path')[0]
 		newPath = element + ';' + oldPath
-		return newPath
-		# winreg.SetValueEx(self.PATH, 'Path', 0, newPath)			
-		return None
+		try:
+			# winreg.SetValueEx(self.PATH, 'Path', 0, newPath)	
+			return newPath			
+		except :
+			return False	
+#####
+# Debut : Definition de la classe de gestion du PATH.
+#####
 
 
 
@@ -144,9 +166,8 @@ class PathManager:
 if __name__ == "__main__":
 
 	if (os.name != 'nt') :
-		print("Vous ne pouvez pas utiliser ce script sur un autre os que Windows")		
+		print("Vous ne pouvez pas utiliser cet utilitaire sur un autre système d'exploitation que Windows")		
 		systeme.exit(os.system("pause"))
-
 
 	pathManager = PathManager()	
 
@@ -156,24 +177,23 @@ if __name__ == "__main__":
 		fenetre_principale = MainWindow(pathManager)
 		fenetre_principale.buildInterface()		
 		fenetre_principale.setCustomStyleSheet("style.qss");
-
 		fenetre_principale.show()
 
 		systeme.exit(app.exec_())
 	else:
-		print("Mode sans gui")	
+		print("CLI Mode")
 
 		lengthArgv = len(systeme.argv)
 		i = 1
 
 		while i < lengthArgv :
-
 			if os.path.exists(systeme.argv[i]):
 				# PathManager.addElementToPATH(systeme.argv[i])	
 				print(systeme.argv[i])
 			else : 
 				print("le chemin spécifié n'existe pas")
 				break
+				
 			i += 1
 
 		systeme.exit(os.system("pause"))
