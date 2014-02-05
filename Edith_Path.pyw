@@ -103,8 +103,11 @@ class MainWindow(QtGui.QWidget):
 	####
 	def ouvrirDossierDialogue(self, lineEdit):
 		""" SLOT : Ouverture de la fenêtre de dialogue de choix d'un dossier """
-
-		dossier = QtGui.QFileDialog.getExistingDirectory()
+		chemin = lineEdit.text()
+		if os.path.exists(chemin):
+			dossier = QtGui.QFileDialog.getExistingDirectory(None, '', chemin)
+		else :
+			dossier = QtGui.QFileDialog.getExistingDirectory()
 		lineEdit.setText(dossier)
 
 	def ajouterCheminPATH(self, lineEdit, labelMessage, plainPATH):
