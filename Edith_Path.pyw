@@ -7,20 +7,18 @@
 
 # On importe Qt
 from PySide import QtGui
-from PySide.QtCore import Qt, QFile
+from PySide.QtCore import Qt, QFile, QSize
 import sys as systeme, winreg, os
 
 
 # Definition de la classe d'affichage de l'interface.
-class MainWindow(QtGui.QWidget):
+class MainWindow(QtGui.QMainWindow):
 	"""TODO """
 
-	def __init__(self, pathManager):
+	def __init__(self):
 		"""TODO """
 
-		self.pathManager = pathManager
-
-		QtGui.QWidget.__init__(self, None)
+		QtGui.QMainWindow.__init__(self, None)
 		
 		self.resize(500, 400)
 		self.setWindowTitle('Edith Path')
@@ -30,17 +28,17 @@ class MainWindow(QtGui.QWidget):
 	def buildInterface(self):
 		"""TODO """
 
-		### Affichage de la variable PATH actuelle ###
-		ActuelPATH = self.pathManager.getPATH().split(";")
-
 		labelPlainPATH = QtGui.QLabel("PATH actuel :")
 		labelPlainPATH.setFixedSize(380,20)
 
-		plainPATH = QtGui.QPlainTextEdit("\n".join(ActuelPATH))
+		### Affichage de la variable PATH actuelle ###
+		self.modelePATH = self.creationModelePATH()
+		
+		plainPATH = QtGui.QListView()
+		plainPATH.setModel(self.modelePATH)
+		plainPATH.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+		plainPATH.setIconSize(QSize(20,20))
 		plainPATH.setFixedSize(480,200)
-		plainPATH.verticalScrollBar().setValue(plainPATH.verticalScrollBar().maximum());
-		plainPATH.setReadOnly(True)
-		plainPATH.setLineWrapMode(QtGui.QPlainTextEdit.NoWrap)
 
 		### Affichage du formulaire de choix du chemin à ajouter au PATH ###
 		labelChoixDossier = QtGui.QLabel("Choississez un dossier à ajouter au path :")
@@ -76,7 +74,9 @@ class MainWindow(QtGui.QWidget):
 		layoutMain.addLayout(layoutBoutonValider)
 		layoutMain.addWidget(labelMessage)
 
-		self.setLayout(layoutMain)
+		zoneCentrale = QtGui.QWidget()
+		zoneCentrale.setLayout(layoutMain)
+		self.setCentralWidget(zoneCentrale)
 
 		####
 		# Initialisation des signaux
@@ -97,6 +97,27 @@ class MainWindow(QtGui.QWidget):
 			print("Le fichier", path, "n'a pas été trouvé.")
 			return self
 
+	def creationModelePATH(self):
+		"""  """
+
+		listStrPATH = PathManager().getPATH().split(";")
+		listStrPATH.reverse()	
+
+		listStdItemsPATH = []
+
+		for strItemPATH in listStrPATH:
+			if os.path.exists(strItemPATH):
+				icon = QtGui.QIcon("valid_path.ico");
+			else:				
+				icon = QtGui.QIcon("unvalid_path.ico");
+			stdItemPATH = QtGui.QStandardItem(icon, strItemPATH)
+			listStdItemsPATH.append(stdItemPATH)
+
+		modelePATH = QtGui.QStandardItemModel()
+		modelePATH.appendColumn(listStdItemsPATH)
+
+		return modelePATH
+
 
 	####
 	# Définition des slots
@@ -113,14 +134,14 @@ class MainWindow(QtGui.QWidget):
 	def ajouterCheminPATH(self, lineEdit, labelMessage, plainPATH):
 		chemin = lineEdit.text()
 		if os.path.exists(chemin):
-			newPath = self.pathManager.addElementToPATH(chemin)
+			newPath = PathManager().addElementToPATH(chemin)
 			if not newPath:
 				labelMessage.setText("L'élément n'a pas pu être ajouté au PATH.")
 			else :
-				labelMessage.setText("L'élément a été correctement ajouté au PATH.")
-				newPath = newPath.split(";")
-				plainPATH.setPlainText("\n".join(newPath))
-
+				labelMessage.setText("L'élément a été correctement ajouté au PATH.")	
+				self.modelePATH = self.creationModelePATH()
+				plainPATH.setModel(self.modelePATH)
+				plainPATH.scrollToTop()
 			return None
 		else:
 			labelMessage.setText("L'élément saisi n'est pas un chemin valide.")
@@ -152,7 +173,7 @@ class PathManager:
 
 	def addElementToPATH(self, element):
 		oldPath = winreg.QueryValueEx(self.PATH, 'Path')[0]
-		newPath = element + ';' + oldPath
+		newPath = oldPath + ';' + element 
 		try:
 			winreg.SetValueEx(self.PATH, 'Path', 0, winreg.REG_EXPAND_SZ, newPath)
 			self.PATH.Close()
@@ -160,7 +181,7 @@ class PathManager:
 		except :
 			return False	
 #####
-# Debut : Definition de la classe de gestion du PATH.
+# Fin : Definition de la classe de gestion du PATH.
 #####
 
 
@@ -172,12 +193,11 @@ if __name__ == "__main__":
 		print("Vous ne pouvez pas utiliser cet utilitaire sur un autre système d'exploitation que Windows")		
 		systeme.exit(os.system("pause"))
 
-	pathManager = PathManager()	
 
 	if(len(systeme.argv) == 1):
 		app = QtGui.QApplication(systeme.argv)
 		
-		fenetre_principale = MainWindow(pathManager)
+		fenetre_principale = MainWindow()
 		fenetre_principale.buildInterface()		
 		fenetre_principale.setCustomStyleSheet("style.qss");
 		fenetre_principale.show()
@@ -191,7 +211,6 @@ if __name__ == "__main__":
 
 		while i < lengthArgv :
 			if os.path.exists(systeme.argv[i]):
-				# PathManager.addElementToPATH(systeme.argv[i])	
 				print(systeme.argv[i])
 			else : 
 				print("le chemin spécifié n'existe pas")
