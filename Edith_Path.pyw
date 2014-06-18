@@ -38,21 +38,21 @@ class MainWindow(QtGui.QMainWindow):
 		plainPATH.setModel(self.modelePATH)
 		plainPATH.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
 		plainPATH.setIconSize(QSize(20,20))
-		plainPATH.setFixedSize(480,200)
+		plainPATH.resize(480,200)
 
 		### Affichage du formulaire de choix du chemin à ajouter au PATH ###
 		labelChoixDossier = QtGui.QLabel("Choississez un dossier à ajouter au path :")
-		labelChoixDossier.setFixedSize(380,20)
+		labelChoixDossier.setFixedSize(480,20)
 
 		boutonChoixDossier = QtGui.QPushButton("Parcourir")
 		boutonChoixDossier.setFixedSize(90,25)
 
 		cheminChoixDossier = QtGui.QLineEdit()
-		cheminChoixDossier.setFixedSize(390,25)
 
 		layoutChoixDossier = QtGui.QHBoxLayout()
 		layoutChoixDossier.addWidget(boutonChoixDossier)
 		layoutChoixDossier.addWidget(cheminChoixDossier)
+
 
 		### Affichage du bouton "Valider" ###
 		boutonValiderDossier = QtGui.QPushButton("Valider")
