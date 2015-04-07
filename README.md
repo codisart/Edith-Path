@@ -1,7 +1,7 @@
 Edith-Path
 ==========
 
-Un petit utilitaire permettant d'ajouter très simplement un dossier à la variable PATH.
+A little tool allowing to add easily a folder to the environnement variable PATH
 
 
 Compilation
