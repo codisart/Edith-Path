@@ -7,12 +7,11 @@ MainWindow {
 }
 
 QPushButton {
-    border: 1px solid #B0B0B0;
     border-radius: 4px;
     font-weight: bold;
-    color :#DFDFDF;
-    background: #2198c0;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #2198c0, stop: 1 #0d5ca6);
+    color: #EEEEEE;
+    background-color: #0095da;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 #2ac3f3 stop:1 #0095da);
 }
 
 QPushButton:hover {
@@ -21,9 +20,37 @@ QPushButton:hover {
 
 QPushButton:pressed {
     color: #FFFFFF;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #0d5ca6, stop: 1 #2198c0);
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #0095da, stop: 1 #2ac3f3);
 }
 
 QLabel {
     font-weight : bold;
+}
+
+QScrollBar:horizontal {
+    background: transparent;
+    height : 10px;
+}
+
+QScrollBar:vertical {
+    background: transparent;
+    width : 10px;
+}
+
+QScrollBar::handle {
+    background: #0095da;
+    border-radius: 5px;
+}
+
+QScrollBar::add-line {
+    height : 0px;
+    width : 0px;
+}
+QScrollBar::sub-line {
+    height : 0px;
+    width : 0px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+     background: none;
 }
