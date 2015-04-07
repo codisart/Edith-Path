@@ -3,6 +3,12 @@ Edith-Path
 
 A little tool allowing to add easily a folder to the environnement variable PATH
 
+How to use
+-----------
+
+
+You'll need to install PySide.
+
 
 Compilation
 -----------
