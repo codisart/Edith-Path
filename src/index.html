@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Hello World!</title>
     <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
+</head>
+<body>
+
+    <script>
+        var ipc = require('ipc');
+
+        ipc.on('asynchronous-reply', function(arg) {
+            console.log(arg); // prints "pong"
+        });
+    </script>
+
     <p>PATH actuel :</p>
 
     <ul>
