@@ -2,6 +2,7 @@ var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var ipc = require('ipc');
 var pathParser = require('codisart_path_parsing');
+var Winreg = require('winreg')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -23,6 +24,15 @@ app.on('ready', function() {
 
     pathParser.parseString('Bonjour;bonjour');
 
+    var regKey = new Winreg({
+      hive: Winreg.HKLM,                                          // HKEY_CURRENT_USER
+      key:  '\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment' // key containing autostart programs
+    })
+
+    regKey.get('Path', function(err, item) {
+      if (!err)
+        console.log('ITEM: '+item.name+'\t'+item.type+'\t'+item.value);
+    });
 
     // and load the index.html of the app.
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
