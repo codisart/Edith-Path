@@ -2,36 +2,59 @@
 <html>
 <head>
     <title>Hello World!</title>
-    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css?version=3.3.5">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css?version=3.3.5">
+
+    <link rel="stylesheet" href="css/style.css?version=2.0.1" >
 </head>
 <body>
 
-    <script>
-        var ipc = require('ipc');
+    <p>PATH actuel :</p>
 
-        ipc.on('asynchronous-reply', function(arg) {
-            console.log(arg); // prints "pong"
+    <ul id="folders-list">
+    </ul>
+
+    <p>Choississez un dossier à ajouter au path :</p>
+
+    <button>Parcourir</button>
+    <input type="text" name="" id="">
+
+    <script type="text/javascript">
+        var ipc = require('ipc');
+        window.$ = window.jQuery = require('./js/jquery.min.js');
+
+
+        ipc.on('asynchronous-reply', function(folders) {
+            var arrayLength = folders.length;
+
+            var foldersListHtml = $('#folders-list');
+            for (var i = 0; i < arrayLength; i++) {
+                var folderElementHtml = $('<li/>');
+                var imgFolderElementHtml = $('<img/>');
+
+                if(folders[i].isValidDirectory) {
+                    imgFolderElementHtml
+                        .attr('src', '../valid_path.ico')
+                        .attr('alt', 'Valid directory');
+                } else {
+                    imgFolderElementHtml
+                        .attr('src', '../unvalid_path.ico')
+                        .attr('alt', 'Unvalid directory');
+                }
+
+                folderElementHtml
+                    .html(folders[i].path)
+                    .prepend(imgFolderElementHtml);
+
+                foldersListHtml.prepend(folderElementHtml);
+            }
         });
     </script>
 
-    <p>PATH actuel :</p>
-
-    <ul>
-        <li><img src="../valid_path.ico" alt="">path/to/folder</li>
-        <li><img src="../unvalid_path.ico" alt="">path/to/folder</li>
-        <li><img src="../valid_path.ico" alt="">path/to/folder</li>
-        <li><img src="../unvalid_path.ico" alt="">path/to/folder</li>
-        <li><img src="../valid_path.ico" alt="">path/to/folder</li>
-        <li><img src="../unvalid_path.ico" alt="">path/to/folder</li>
-        <li><img src="../valid_path.ico" alt="">path/to/folder</li>
-        <li><img src="../unvalid_path.ico" alt="">path/to/folder</li>
-    </ul>
-    <h1>Hello World!</h1>
-    We are using io.js <script>document.write(process.version)</script>
-    and Electron <script>document.write(process.versions['electron'])</script>.
-  </body>
+</body>
 </html>
-
+<!--
 
 labelPlainPATH = QtGui.QLabel("PATH actuel :")
 		labelPlainPATH.setFixedSize(380,20)
@@ -88,3 +111,4 @@ labelPlainPATH = QtGui.QLabel("PATH actuel :")
 		####
 		boutonChoixDossier.clicked.connect(lambda : self.ouvrirDossierDialogue(cheminChoixDossier))
 		boutonValiderDossier.clicked.connect(lambda : self.ajouterCheminPATH(cheminChoixDossier, labelMessage, plainPATH))
+-->
