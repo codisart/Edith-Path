@@ -6,6 +6,11 @@ var Winreg = require('winreg');
 var fs = require('fs');
 var os = require('os');
 
+
+if(process.argv.slice(2).length > 0) {
+    app.quit();
+}
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
