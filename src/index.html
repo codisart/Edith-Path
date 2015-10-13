@@ -22,32 +22,35 @@
 
     <script type="text/javascript">
         var ipc = require('ipc');
-        window.$ = window.jQuery = require('./js/jquery.min.js');
-
-
+        window.$ = window.jQuery = require('jquery');
+        
         ipc.on('asynchronous-reply', function(folders) {
             var arrayLength = folders.length;
-
             var foldersListHtml = $('#folders-list');
-            for (var i = 0; i < arrayLength; i++) {
-                var folderElementHtml = $('<li/>');
-                var imgFolderElementHtml = $('<img/>');
 
-                if(folders[i].isValidDirectory) {
-                    imgFolderElementHtml
-                        .attr('src', '../valid_path.ico')
-                        .attr('alt', 'Valid directory');
-                } else {
-                    imgFolderElementHtml
-                        .attr('src', '../unvalid_path.ico')
-                        .attr('alt', 'Unvalid directory');
+            if(arrayLength > 0) {
+                for (var i = 0; i < arrayLength; i++) {
+                    var folderElementHtml = $('<li/>');
+                    var imgFolderElementHtml = $('<img/>');
+
+                    if(folders[i].isValidDirectory) {
+                        imgFolderElementHtml
+                            .attr('src', '../valid_path.ico')
+                            .attr('alt', 'Valid directory');
+                    } else {
+                        imgFolderElementHtml
+                            .attr('src', '../unvalid_path.ico')
+                            .attr('alt', 'Unvalid directory');
+                    }
+
+                    folderElementHtml
+                        .html(folders[i].path)
+                        .prepend(imgFolderElementHtml);
+
+                    foldersListHtml.prepend(folderElementHtml);
                 }
-
-                folderElementHtml
-                    .html(folders[i].path)
-                    .prepend(imgFolderElementHtml);
-
-                foldersListHtml.prepend(folderElementHtml);
+            } else {
+                foldersListHtml.after($('<p/>').html('Error'));
             }
         });
     </script>

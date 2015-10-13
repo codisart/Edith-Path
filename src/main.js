@@ -4,6 +4,7 @@ var ipc = require('ipc');
 var pathParser = require('codisart_path_parsing');
 var Winreg = require('winreg');
 var fs = require('fs');
+var os = require('os');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -31,35 +32,37 @@ app.on('ready', function() {
     // and load the index.html of the app.
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-    regKey.get('Path', function(err, item) {
-      if (!err) {
-        var pathArrayValue = pathParser.parseString(item.value);
-        var folders = [];
+    if(os.platform() == 'win32') {
+        regKey.get('Path', function(err, item) {
+          if (!err) {
+            var pathArrayValue = pathParser.parseString(item.value);
+            var folders = [];
 
-        var arrayLength = pathArrayValue.length;
-        for (var i = 0; i < arrayLength; i++) {
-            var folder = {path : pathArrayValue[i]};
+            var arrayLength = pathArrayValue.length;
+            for (var i = 0; i < arrayLength; i++) {
+                var folder = {path : pathArrayValue[i]};
 
-            try {
-              stats = fs.statSync(pathArrayValue[i]);
-              if (stats.isDirectory()) {
-                folder.isValidDirectory = true;
-              } else {
-                folder.isValidDirectory = false;
-              }
+                try {
+                  stats = fs.statSync(pathArrayValue[i]);
+                  if (stats.isDirectory()) {
+                    folder.isValidDirectory = true;
+                  } else {
+                    folder.isValidDirectory = false;
+                  }
+                }
+                catch (e) {
+                  folder.isValidDirectory = false;
+                }
+
+                folders.push(folder);
             }
-            catch (e) {
-              folder.isValidDirectory = false;
-            }
 
-            folders.push(folder);
-        }
-
-        webContents.on('did-finish-load', function() {
-            webContents.send('asynchronous-reply', folders);
+            webContents.on('did-finish-load', function() {
+                webContents.send('asynchronous-reply', folders);
+            });
+          }
         });
-      }
-    });
+    }
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {
