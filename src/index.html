@@ -4,26 +4,39 @@
     <title>Hello World!</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css?version=3.3.5">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css?version=3.3.5">
+    <!-- <link rel="stylesheet" href="http://fezvrasta.github.io/bootstrap-material-design/dist/css/material-fullpalette.min.css"> -->
+    <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css?version=3.3.5"> -->
 
     <link rel="stylesheet" href="css/style.css?version=2.0.1" >
 </head>
 <body>
 
-    <p>PATH actuel :</p>
+    <div class="container">
+        <p>PATH actuel :</p>
 
-    <ul id="folders-list">
-    </ul>
+        <ul id="folders-list">
+        </ul>
 
-    <p>Choississez un dossier à ajouter au path :</p>
+        <p>Choississez un dossier à ajouter au path :</p>
 
-    <button>Parcourir</button>
-    <input type="text" name="" id="">
+        <button>Parcourir</button>
+        <div class="form-group">
+            <input type="text" class="form-control" />
+        </div>
+        <div class="row">
+              <div class="col-xs-2"><button class="btn btn-primary">Parcourir</button></div>
+              <div class="col-xs-10"><input type="text" class="form-control" id="exampleInputAmount"></div>
+        </div>
+
+        <label class="file">
+          <span class="file-custom"></span>
+        </label>
+    </div>
 
     <script type="text/javascript">
         var ipc = require('ipc');
         window.$ = window.jQuery = require('jquery');
-        
+
         ipc.on('asynchronous-reply', function(folders) {
             var arrayLength = folders.length;
             var foldersListHtml = $('#folders-list');
