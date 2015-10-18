@@ -10,3 +10,9 @@ img {
 	width: 20px;
 	height : 20px;
 }
+
+ul {
+		overflow-y: auto;
+		width: 480px;
+		height : 150px;
+}
