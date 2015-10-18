@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Hello World!</title>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css?version=3.3.5">
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css?version=3.3.5"> -->
     <!-- <link rel="stylesheet" href="http://fezvrasta.github.io/bootstrap-material-design/dist/css/material-fullpalette.min.css"> -->
     <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css?version=3.3.5"> -->
-
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css?version=2.0.1" >
 </head>
 <body>
 
     <div class="container">
-        <p>PATH actuel :</p>
-
-        <ul id="folders-list">
-        </ul>
-
-        <p>Choississez un dossier à ajouter au path :</p>
-
-        <button>Parcourir</button>
-        <div class="form-group">
-            <input type="text" class="form-control" />
-        </div>
         <div class="row">
-              <div class="col-xs-2"><button class="btn btn-primary">Parcourir</button></div>
-              <div class="col-xs-10"><input type="text" class="form-control" id="exampleInputAmount"></div>
+            <h1>PATH actuel :</h1>
         </div>
 
-        <label class="file">
-          <span class="file-custom"></span>
-        </label>
+        <div class="row">
+            <ul id="folders-list">
+            </ul>
+        </div>
+
+        <div class="row">
+            <p>Choississez un dossier à ajouter au path :</p>
+        </div>
+
+        <div class="row">
+            <button class="btn btn-primary">Parcourir</button>
+            <input type="text" class="form-control" id="exampleInputAmount">
+        </div>
+
     </div>
 
     <script type="text/javascript">
         var ipc = require('ipc');
         window.$ = window.jQuery = require('jquery');
 
-        ipc.on('asynchronous-reply', function(folders) {
+        ipc.on('synchronous-reply', function(folders) {
             var arrayLength = folders.length;
             var foldersListHtml = $('#folders-list');
 
@@ -84,8 +84,8 @@ labelPlainPATH = QtGui.QLabel("PATH actuel :")
 		plainPATH.setIconSize(QSize(20,20))
 		plainPATH.resize(480,200)
 
-		### Affichage du formulaire de choix du chemin à ajouter au PATH ###
-		labelChoixDossier = QtGui.QLabel("Choississez un dossier à ajouter au path :")
+		### Affichage du formulaire de choix du chemin Ã  ajouter au PATH ###
+		labelChoixDossier = QtGui.QLabel("Choississez un dossier Ã  ajouter au path :")
 		labelChoixDossier.setFixedSize(480,20)
 
 		boutonChoixDossier = QtGui.QPushButton("Parcourir")
@@ -109,7 +109,7 @@ labelPlainPATH = QtGui.QLabel("PATH actuel :")
 		labelMessage.setFixedSize(480,20)
 
 
-		### Création du layout principal ###
+		### CrÃ©ation du layout principal ###
 		layoutMain = QtGui.QVBoxLayout()
 		layoutMain.addWidget(labelPlainPATH)
 		layoutMain.addWidget(plainPATH)

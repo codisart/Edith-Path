@@ -26,7 +26,12 @@ app.on('window-all-closed', function() {
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 500, height: 400, icon: 'img/icon.png'});
+    mainWindow = new BrowserWindow({
+        width: 500,
+        height: 400,
+        icon: 'img/icon.png',
+    });
+    
     var webContents = mainWindow.webContents;
 
     var regKey = new Winreg({
@@ -63,7 +68,7 @@ app.on('ready', function() {
             }
 
             webContents.on('did-finish-load', function() {
-                webContents.send('asynchronous-reply', folders);
+                webContents.send('synchronous-reply', folders);
             });
           }
         });
