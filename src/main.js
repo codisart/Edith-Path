@@ -27,11 +27,12 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 500,
-        height: 400,
+        width: 987,
+        height: 610,
         icon: 'img/icon.png',
     });
-    
+    // mainWindow.setResizable(false);
+
     var webContents = mainWindow.webContents;
 
     var regKey = new Winreg({
