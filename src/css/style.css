@@ -1,34 +1,36 @@
-body,html {
-	padding : 0; margin : 0;
-}
+body,html {padding : 0; margin : 0; height: 100%;}
 
 body {
-   font-family : 'Noto Sans'; font-size: 12px; background-color: #ECEFF1;
+		font-family : 'Noto Sans';
+		font-size: 12px;
+		background-color: #ECEFF1;
+		display: flex;
+		justify-content: space-between;
+		flex-direction: column;
 }
 
 header {
-	height : 72px;
+	height : 144px;
 	display: flex;
-	flex-flow: row nowrap;
 	justify-content:flex-end;
 }
 
 h1 {
 	padding: 0;
-	margin: 0 0 0 32px;
-	height : 72px;
-	line-height : 72px;
-	font-size: 18px;
+	margin: 0 0 0 16px;
+	height : 48px;
+	line-height : 48px;
+	font-size: 16px;
 	font-weight: 400;
 	flex: 1;
 }
 
 h2 {
-	height: 60px;
-	line-height : 60px;
+	height: 48px;
+	line-height : 48px;
 	padding: 0;
-	margin: 0 0 0 24px;
-	font-size: 18px;
+	margin: 0 0 0 18px;
+	font-size: 16px;
 	font-weight: 600;
 }
 
@@ -46,81 +48,78 @@ img {
 }
 
 section {
-	margin : 32px; background-color: #FFFFFF;
+		width: 60%;
+		margin: auto;
+		background-color: #FFFFFF;
 }
 
-.altitude-1 {
-	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+section.add-folders {
+		margin-top: -96px;
 }
 
-.altitude-2 {
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
-.altitude-3 {
-	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-}
-
-.altitude-4 {
-	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-.altitude-5 {
-	box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+section.list-path {
+		flex: 1;
+		margin-top: 24px;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
 }
 
 ul {
-	overflow-y: auto;
-	height : 150px;
-	width : 40%;
-	list-style-type: none;
-	border: 1px solid #cccccc;
-	margin: 0 32px 0;
+		flex: 1;
+		width : 100%;
+		overflow: auto;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
 }
+
+li {
+		padding: 0 16px 0 16px;
+		margin: 0;
+		display: block;
+		border-bottom: 1px solid #cccccc;
+		height: 48px;
+		line-height: 48px;
+		background-repeat: no-repeat;
+		background-position: 16px 4px;
+		background-size: 40px;
+		font-size: 14px;
+		opacity: 0.7;
+}
+
+
 
 .folder-input {
 	display: flex;
-	margin : 24px 24px 0 24px;
+	justify-content : flex-end;
+	margin : 18px 18px 0 18px;
 }
 
 .folder-input * {
-	margin-bottom: 24px;
-}
-
-.folder-input input {
-	flex : 1;
-	font-size: 16px;
-	border: none;
-	border-bottom: 2px solid #00796B;
-	padding : 0;
-	height: 40px;
-	line-height: 40px;
-	vertical-align: bottom;
-	box-sizing: border-box;
-	margin-bottom: 8px;
-	margin-left : 24px;
-	margin-right : 24px;
-	padding-bottom: 6px;
-	padding-top: 16px;
-}
-
-.folder-input input:hover,
-.folder-input input:focus
-{
-	outline: none;
+	margin-bottom: 18px;
 }
 
 .folder-input button {
+		min-width: 88px;
+		height: 36px;
+		border: none;
+		font-size: 15px;
+    text-transform: uppercase;
+		font-family: 'Noto Sans' !important;
+		font-variant: normal;
+    font-style: normal;
+    font-weight: 600;
+		outline : none;
 }
-
 
 .holder {
 	border: 2px dashed #ccc;
-	margin: 0 24px;
-	height: 100px;
+	margin: 0;
+	height: 72px;
 	color: #ccc;
-	font-size: 32px;
-	line-height: 100px;
+	font-size: 16px;
+	line-height: 72px;
 	text-align: center;
 	-webkit-user-select: none;
 }
@@ -129,6 +128,30 @@ ul {
 	border: 2px dashed #999;
 	color: #eee;
 }
+.md-icon {
+    font-family: 'Material Icons';
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga" 1;
+    font-style: normal;
+    text-transform: none;
+    line-height: 1;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+	}
+
+.md-icon.dp48 {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+}
+.md-icon {
+    color: #00796B;
+}
+
 
 /*
 h1 {
@@ -176,6 +199,25 @@ header img {
 	background-color: #E0F2F1;
 }
 
+.altitude-1 {
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.altitude-2 {
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.altitude-3 {
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.altitude-4 {
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.altitude-5 {
+	box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
 
 /* Couleur secondaire : Purple
 .bg-color-accent,
@@ -185,4 +227,24 @@ header img {
 .bg-color-accent:active  {
 	background-color: #00796B;
 	color : rgba(255, 255, 255, 100);
+
+
+
+
+	.folder-input input {
+		flex : 1;
+		font-size: 16px;
+		border: none;
+		border-bottom: 2px solid #00796B;
+		padding : 0;
+		height: 40px;
+		line-height: 40px;
+		vertical-align: bottom;
+		box-sizing: border-box;
+		margin-bottom: 8px;
+		margin-left : 24px;
+		margin-right : 24px;
+		padding-bottom: 6px;
+		padding-top: 16px;
+	}
 }*/

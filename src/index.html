@@ -4,7 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Hello World!</title>
 
-    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,500,500italic,700,700italic,300italic,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,500,500italic,600,600italic,700,700italic,300italic,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,600,600italic,700,700italic,300italic,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Material+Icons' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css?version=2.0.1" >
 </head>
 <body>
@@ -16,21 +18,24 @@
         </div>
     </header>
 
-    <section class="altitude-2">
+    <section class="altitude-2 add-folders">
         <h2>Choisir un dossier à ajouter au path</h2>
-
+        <div class="choose-folder">
+            <label for="folder-input" class="md-icon dp48" >add_circle</label>
+            <input id="folder-input" name="folder-input" type="file"  style="display:none;"/>
+        </div>
         <div class="holder">
             Faites glisser votre dossier ici pour l'ajouter au path.
         </div>
 
         <div class="folder-input">
-            <button class="btn bg-color-accent ">Parcourir</button>
-            <input type="text" class="form-control" id="exampleInputAmount">
-            <button class="btn bg-color-accent ">Valider</button>
+            <!-- <button class="btn bg-color-accent ">Parcourir</button> -->
+            <!-- <input type="text" class="form-control" id="exampleInputAmount"> -->
+            <button class="btn altitude-2 bg-color-primary-dark">Valider</button>
         </div>
     </section>
 
-    <section class="altitude-2">
+    <section class="list-path altitude-2">
         <h2>PATH actuel</h2>
 
         <ul id="folders-list">
@@ -48,21 +53,18 @@
             if(arrayLength > 0) {
                 for (var i = 0; i < arrayLength; i++) {
                     var folderElementHtml = $('<li/>');
-                    var imgFolderElementHtml = $('<img/>');
+                    var iconHtml = $('<i/>')
+                        .attr('class', 'md-icon dp48');
 
                     if(folders[i].isValidDirectory) {
-                        imgFolderElementHtml
-                            .attr('src', '../valid_path.ico')
-                            .attr('alt', 'Valid directory');
+                        iconHtml.html('check_circle');
                     } else {
-                        imgFolderElementHtml
-                            .attr('src', '../unvalid_path.ico')
-                            .attr('alt', 'Unvalid directory');
+                        iconHtml.html('error');
                     }
 
                     folderElementHtml
                         .html(folders[i].path)
-                        .prepend(imgFolderElementHtml);
+                        .prepend(iconHtml);
 
                     foldersListHtml.prepend(folderElementHtml);
                 }
@@ -71,6 +73,9 @@
             }
         });
 
+        $('.choose-folder').on('change', '#folder-input', function() {
+            console.log($(this).val());
+        });
 
     </script>
 

@@ -1,3 +1,5 @@
+'use strict';
+
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var ipc = require('ipc');
@@ -5,7 +7,7 @@ var pathParser = require('codisart_path_parsing');
 var Winreg = require('winreg');
 var fs = require('fs');
 var os = require('os');
-
+var dialog = require('dialog');
 
 if(process.argv.slice(2).length > 0) {
     app.quit();
@@ -51,10 +53,11 @@ app.on('ready', function() {
 
             var arrayLength = pathArrayValue.length;
             for (var i = 0; i < arrayLength; i++) {
+
                 var folder = {path : pathArrayValue[i]};
 
                 try {
-                  stats = fs.statSync(pathArrayValue[i]);
+                  var stats = fs.statSync(pathArrayValue[i]);
                   if (stats.isDirectory()) {
                     folder.isValidDirectory = true;
                   } else {
@@ -74,6 +77,8 @@ app.on('ready', function() {
           }
         });
     }
+
+    // console.log(dialog.showOpenDialog({ properties: [ 'openFile', 'openDirectory', 'multiSelections' ]}));
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {
