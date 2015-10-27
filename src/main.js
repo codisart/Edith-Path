@@ -76,9 +76,19 @@ app.on('ready', function() {
             });
           }
         });
+
+        ipc.on('add-folders', function(event, arg) {
+            // regKey.get('Path', function(err, item) {
+            //     if (!err) {
+                    var pathArrayValue = pathParser.parseArray(arg);
+
+            //     }
+            // }
+            console.log(arg);
+            event.sender.send('asynchronous-reply', 'pong');
+        });
     }
 
-    // console.log(dialog.showOpenDialog({ properties: [ 'openFile', 'openDirectory', 'multiSelections' ]}));
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {

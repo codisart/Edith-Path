@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Hello World!</title>
+    <title>Edith Path</title>
 
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,500,500italic,600,600italic,700,700italic,300italic,300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,600,600italic,700,700italic,300italic,300' rel='stylesheet' type='text/css'>
@@ -20,18 +20,18 @@
 
     <section class="altitude-2 add-folders">
         <h2>Choisir un dossier à ajouter au path</h2>
-        <div class="choose-folder">
-            <label for="folder-input" class="md-icon dp48" >add_circle</label>
-            <input id="folder-input" name="folder-input" type="file"  style="display:none;"/>
-        </div>
+
+        <div class="choose-folder md-icon dp48">add_circle</div>
+
+        <ul id="folders-to-add-list">
+        </ul>
+
         <div class="holder">
             Faites glisser votre dossier ici pour l'ajouter au path.
         </div>
 
         <div class="folder-input">
-            <!-- <button class="btn bg-color-accent ">Parcourir</button> -->
-            <!-- <input type="text" class="form-control" id="exampleInputAmount"> -->
-            <button class="btn altitude-2 bg-color-primary-dark">Valider</button>
+            <button class="btn altitude-1 bg-color-primary-dark">Valider</button>
         </div>
     </section>
 
@@ -43,7 +43,11 @@
     </section>
 
     <script type="text/javascript">
+        'use strict';
         var ipc = require('ipc');
+        var remote = require('remote');
+        var dialog = remote.require('dialog');
+        var foldersToAdd = [];
         window.$ = window.jQuery = require('jquery');
 
         ipc.on('synchronous-reply', function(folders) {
@@ -73,9 +77,31 @@
             }
         });
 
-        $('.choose-folder').on('change', '#folder-input', function() {
-            console.log($(this).val());
+        $('.choose-folder').on('click', function() {
+            var folderPath = dialog.showOpenDialog({ properties: [ 'openDirectory']});
+
+            if(folderPath) {
+                foldersToAdd.push(folderPath);
+
+                var folderElementHtml = $('<li/>');
+                var iconHtml = $('<i/>')
+                    .attr('class', 'md-icon dp48')
+                    .html('check_circle');
+
+                folderElementHtml
+                    .html(folderPath)
+                    .prepend(iconHtml);
+
+                $('#folders-to-add-list').prepend(folderElementHtml);
+            }
         });
+
+        $('.folder-input button').on('click', function() {
+            ipc.send('add-folders', foldersToAdd);
+            return false;
+        });
+
+
 
     </script>
 
