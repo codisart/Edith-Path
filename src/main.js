@@ -37,58 +37,68 @@ app.on('ready', function() {
 
     var webContents = mainWindow.webContents;
 
-    var regKey = new Winreg({
-      hive: Winreg.HKLM,                                          // HKEY_CURRENT_USER
-      key:  '\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment' // key containing autostart programs
-    })
-
     // and load the index.html of the app.
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-    if(os.platform() == 'win32') {
-        regKey.get('Path', function(err, item) {
-          if (!err) {
-            var pathArrayValue = pathParser.parseString(item.value);
-            var folders = [];
+    // if(os.platform() == 'win32') {
+        var regKey = new Winreg({
+            hive: Winreg.HKLM,                                          // HKEY_CURRENT_USER
+            key:  '\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment' // key containing autostart programs
+        });
 
-            var arrayLength = pathArrayValue.length;
-            for (var i = 0; i < arrayLength; i++) {
-
-                var folder = {path : pathArrayValue[i]};
-
-                try {
-                  var stats = fs.statSync(pathArrayValue[i]);
-                  if (stats.isDirectory()) {
-                    folder.isValidDirectory = true;
-                  } else {
-                    folder.isValidDirectory = false;
-                  }
+        webContents.on('did-finish-load', function() {
+            regKey.get('Path', function(err, item) {
+                if (!err) {
+                    webContents.send('data-folders', buildHtmlData(pathParser.parseString(item.value)));
                 }
-                catch (e) {
-                  folder.isValidDirectory = false;
-                }
-
-                folders.push(folder);
-            }
-
-            webContents.on('did-finish-load', function() {
-                webContents.send('synchronous-reply', folders);
             });
-          }
         });
 
         ipc.on('add-folders', function(event, arg) {
-            // regKey.get('Path', function(err, item) {
-            //     if (!err) {
-                    var pathArrayValue = pathParser.parseArray(arg);
+            regKey.get('Path', function(err, item) {
+                if (!err) {
+                    try {
+                        var pathArrayValue = pathParser.parseArray(arg);
+                        var newPathStringValue = item.value + ';' + pathArrayValue;
 
-            //     }
-            // }
-            console.log(arg);
-            event.sender.send('asynchronous-reply', 'pong');
+                        regKey.set('Path', Winreg.REG_EXPAND_SZ, newPathStringValue,  function(err) {
+                            if (!err) {
+                                event.sender.send('data-folders', buildHtmlData(pathParser.parseString(newPathStringValue)));
+                            }
+                        });
+                    }
+                    catch (e) {
+                        event.sender.send('error-paths', 'plop');
+                    }
+                }
+            });
         });
-    }
+    // }
 
+    function buildHtmlData(pathArrayValue) {
+        var folders = [];
+
+        var arrayLength = pathArrayValue.length;
+        for (var i = 0; i < arrayLength; i++) {
+            var folder = {path : pathArrayValue[i]};
+
+            try {
+                var stats = fs.statSync(pathArrayValue[i]);
+                if (stats.isDirectory()) {
+                    folder.isValidDirectory = true;
+                } else {
+                    folder.isValidDirectory = false;
+                }
+            }
+            catch (e) {
+                folder.isValidDirectory = false;
+            }
+
+            folders.push(folder);
+        }
+
+        return folders;
+    }
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {

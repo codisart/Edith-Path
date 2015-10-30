@@ -50,9 +50,9 @@
         var foldersToAdd = [];
         window.$ = window.jQuery = require('jquery');
 
-        ipc.on('synchronous-reply', function(folders) {
+        ipc.on('data-folders', function(folders) {
             var arrayLength = folders.length;
-            var foldersListHtml = $('#folders-list');
+            var foldersListHtml = $('#folders-list').empty();;
 
             if(arrayLength > 0) {
                 for (var i = 0; i < arrayLength; i++) {
@@ -80,8 +80,8 @@
         $('.choose-folder').on('click', function() {
             var folderPath = dialog.showOpenDialog({ properties: [ 'openDirectory']});
 
-            if(folderPath) {
-                foldersToAdd.push(folderPath);
+            if(folderPath[0]) {
+                foldersToAdd.push(folderPath[0]);
 
                 var folderElementHtml = $('<li/>');
                 var iconHtml = $('<i/>')
