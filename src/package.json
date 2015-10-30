@@ -8,5 +8,9 @@
     "type" : "git",
     "url" : "https://github.com/codisart/Edith-Path"
   },
+  "dependencies": {
+    "winreg": "~0.0.12",
+    "jquery": "~2.1.4"
+  },
   "license": "MIT"
 }
