@@ -26,7 +26,7 @@
         <ul id="folders-to-add-list">
         </ul>
 
-        <div class="holder">
+        <div id="holder" class="holder">
             Faites glisser votre dossier ici pour l'ajouter au path.
         </div>
 
@@ -44,11 +44,34 @@
 
     <script type="text/javascript">
         'use strict';
+
         var ipc = require('ipc');
         var remote = require('remote');
         var dialog = remote.require('dialog');
         var foldersToAdd = [];
         window.$ = window.jQuery = require('jquery');
+
+        document.ondragover = document.ondrop = function(e) {
+          e.preventDefault();
+          return false;
+        };
+
+        function addFolder(path) {
+            if(path) {
+                foldersToAdd.push(path);
+
+                var folderElementHtml = $('<li/>');
+                var iconHtml = $('<i/>')
+                    .attr('class', 'md-icon dp48')
+                    .html('check_circle');
+
+                folderElementHtml
+                    .html(path)
+                    .prepend(iconHtml);
+
+                $('#folders-to-add-list').prepend(folderElementHtml);
+            }
+        }
 
         ipc.on('data-folders', function(folders) {
             var arrayLength = folders.length;
@@ -80,91 +103,28 @@
         $('.choose-folder').on('click', function() {
             var folderPath = dialog.showOpenDialog({ properties: [ 'openDirectory']});
 
-            if(folderPath[0]) {
-                foldersToAdd.push(folderPath[0]);
-
-                var folderElementHtml = $('<li/>');
-                var iconHtml = $('<i/>')
-                    .attr('class', 'md-icon dp48')
-                    .html('check_circle');
-
-                folderElementHtml
-                    .html(folderPath)
-                    .prepend(iconHtml);
-
-                $('#folders-to-add-list').prepend(folderElementHtml);
-            }
+            addFolder(folderPath[0]);
         });
 
         $('.folder-input button').on('click', function() {
             ipc.send('add-folders', foldersToAdd);
+            $('#folders-to-add-list').empty();
             return false;
         });
 
+        $('#holder').on("drop", function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var folderPath = event.originalEvent.dataTransfer.files[0].path;
 
+            addFolder(folderPath);
+        });
 
     </script>
 
 </body>
 </html>
-<!--
 
-labelPlainPATH = QtGui.QLabel("PATH actuel :")
-		labelPlainPATH.setFixedSize(380,20)
-
-		### Affichage de la variable PATH actuelle ###
-		self.modelePATH = self.creationModelePATH()
-
-		plainPATH = QtGui.QListView()
-		plainPATH.setModel(self.modelePATH)
-		plainPATH.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
-		plainPATH.setIconSize(QSize(20,20))
-		plainPATH.resize(480,200)
-
-		### Affichage du formulaire de choix du chemin Ã  ajouter au PATH ###
-		labelChoixDossier = QtGui.QLabel("Choississez un dossier Ã  ajouter au path :")
-		labelChoixDossier.setFixedSize(480,20)
-
-		boutonChoixDossier = QtGui.QPushButton("Parcourir")
-		boutonChoixDossier.setFixedSize(90,25)
-
-		cheminChoixDossier = QtGui.QLineEdit()
-
-		layoutChoixDossier = QtGui.QHBoxLayout()
-		layoutChoixDossier.addWidget(boutonChoixDossier)
-		layoutChoixDossier.addWidget(cheminChoixDossier)
-
-
-		### Affichage du bouton "Valider" ###
-		boutonValiderDossier = QtGui.QPushButton("Valider")
-		boutonValiderDossier.setFixedSize(90,25)
-
-		layoutBoutonValider = QtGui.QHBoxLayout()
-		layoutBoutonValider.addWidget(boutonValiderDossier)
-
-		labelMessage = QtGui.QLabel()
-		labelMessage.setFixedSize(480,20)
-
-
-		### CrÃ©ation du layout principal ###
-		layoutMain = QtGui.QVBoxLayout()
-		layoutMain.addWidget(labelPlainPATH)
-		layoutMain.addWidget(plainPATH)
-		layoutMain.addWidget(labelChoixDossier)
-		layoutMain.addLayout(layoutChoixDossier)
-		layoutMain.addLayout(layoutBoutonValider)
-		layoutMain.addWidget(labelMessage)
-
-		zoneCentrale = QtGui.QWidget()
-		zoneCentrale.setLayout(layoutMain)
-		self.setCentralWidget(zoneCentrale)
-
-		####
-		# Initialisation des signaux
-		####
-		boutonChoixDossier.clicked.connect(lambda : self.ouvrirDossierDialogue(cheminChoixDossier))
-		boutonValiderDossier.clicked.connect(lambda : self.ajouterCheminPATH(cheminChoixDossier, labelMessage, plainPATH))
--->
 <!--
 <html>
 <head>
