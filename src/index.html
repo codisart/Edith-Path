@@ -21,8 +21,6 @@
     <section class="altitude-2 add-folders">
         <h2>Choisir un dossier à ajouter au path</h2>
 
-        <div class="choose-folder md-icon dp48">add_circle</div>
-
         <ul id="folders-to-add-list">
         </ul>
 
@@ -34,6 +32,8 @@
             <button class="btn altitude-1 bg-color-primary-dark">Valider</button>
         </div>
     </section>
+
+    <div class="choose-folder altitude-2"></div>
 
     <section class="list-path altitude-2">
         <h2>PATH actuel</h2>
@@ -80,18 +80,20 @@
             if(arrayLength > 0) {
                 for (var i = 0; i < arrayLength; i++) {
                     var folderElementHtml = $('<li/>');
-                    var iconHtml = $('<i/>')
-                        .attr('class', 'md-icon dp48');
+                    // var iconHtml = $('<i/>')
+                    //     .attr('class', 'md-icon dp48');
 
                     if(folders[i].isValidDirectory) {
-                        iconHtml.html('check_circle');
+                        // iconHtml.html('check_circle');
+                        folderElementHtml.attr('class', 'valid-path');
                     } else {
-                        iconHtml.html('error');
+                        // iconHtml.html('error');
+                        folderElementHtml.attr('class', 'invalid-path');
                     }
 
                     folderElementHtml
-                        .html(folders[i].path)
-                        .prepend(iconHtml);
+                        .html(folders[i].path);
+                        // .prepend(iconHtml);
 
                     foldersListHtml.prepend(folderElementHtml);
                 }
@@ -103,7 +105,9 @@
         $('.choose-folder').on('click', function() {
             var folderPath = dialog.showOpenDialog({ properties: [ 'openDirectory']});
 
-            addFolder(folderPath[0]);
+            if(folderPath.length > 0){
+                addFolder(folderPath[0]);
+            }
         });
 
         $('.folder-input button').on('click', function() {

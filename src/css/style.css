@@ -49,7 +49,7 @@ img {
 }
 
 section {
-    width: 60%;
+    width: 75%;
     margin: auto;
     background-color: #FFFFFF;
 }
@@ -66,6 +66,23 @@ section.list-path {
     flex-direction: column;
 }
 
+div.choose-folder {
+    position: absolute;
+    left : 20px;
+    top : 124px;
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-image: url(../img/ic_add_circle_black_24px.svg);
+    background-position: -5px -5px;
+    background-size: 50px;
+    border-radius: 40px;
+    margin : 0;
+    padding : 0;
+    cursor: pointer;
+}
+
 ul {
     flex: 1;
     width : 100%;
@@ -76,26 +93,28 @@ ul {
 }
 
 li {
-    padding: 0 16px 0 72px;
+    padding: 0 16px 0 56px;
     margin: 0;
     display: block;
     border-bottom: 1px solid #cccccc;
     height: 48px;
     line-height: 48px;
     background-repeat: no-repeat;
-    background-position: 16px 4px;
-    background-size: 40px;
+    background-position: 16px 12px;
     font-size: 14px;
-    opacity: 0.7;
 }
 
 li:last-child {
     border : none;
 }
 
+li.valid-path {
+    background-image: url(../img/ic_check_circle_black_24px.svg);
+}
 
-
-
+li.invalid-path {
+    background-image: url(../img/ic_error_black_24px.svg);
+}
 
 .folder-input {
     display: flex;
@@ -119,6 +138,7 @@ li:last-child {
     font-style: normal;
     font-weight: 600;
     outline : none;
+    cursor: pointer;
 }
 
 .holder {

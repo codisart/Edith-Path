@@ -29,8 +29,8 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 987,
-        height: 610,
+        width: 750,
+        height: 650,
         icon: 'img/icon.png',
     });
     // mainWindow.setResizable(false);
