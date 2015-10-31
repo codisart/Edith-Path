@@ -83,6 +83,21 @@ div.choose-folder {
     cursor: pointer;
 }
 
+div.section-header {
+    display: flex;
+    justify-content : space-between;
+}
+
+div.refresh-list {
+    height: 24px;
+    width: 24px;
+    margin-right: 16px;
+    margin-top: 12px;
+    cursor: pointer;
+    background-image: url(../img/ic_refresh_black_24px.svg);
+    background-repeat: no-repeat;
+}
+
 ul {
     flex: 1;
     width : 100%;

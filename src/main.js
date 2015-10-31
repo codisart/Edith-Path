@@ -73,6 +73,14 @@ app.on('ready', function() {
                 }
             });
         });
+
+        ipc.on('refresh-folders', function(event, arg) {
+            regKey.get('Path', function(err, item) {
+                if (!err) {
+                    webContents.send('data-folders', buildHtmlData(pathParser.parseString(item.value)));
+                }
+            });
+        });
     // }
 
     function buildHtmlData(pathArrayValue) {

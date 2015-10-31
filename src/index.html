@@ -36,7 +36,11 @@
     <div class="choose-folder altitude-2"></div>
 
     <section class="list-path altitude-2">
-        <h2>PATH actuel</h2>
+        <div class="section-header">
+            <h2>PATH actuel</h2>
+            <div class="refresh-list"></div>
+        </div>
+
 
         <ul id="folders-list">
         </ul>
@@ -123,6 +127,10 @@
 
             addFolder(folderPath);
         });
+
+        $('.refresh-list').on("click", function() {
+            ipc.send('refresh-folders', true);
+        })
 
     </script>
 
