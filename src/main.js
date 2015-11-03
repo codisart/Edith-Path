@@ -40,7 +40,7 @@ app.on('ready', function() {
     // and load the index.html of the app.
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-    // if(os.platform() == 'win32') {
+    if(os.platform() == 'win32') {
         var regKey = new Winreg({
             hive: Winreg.HKLM,                                          // HKEY_CURRENT_USER
             key:  '\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment' // key containing autostart programs
@@ -81,7 +81,7 @@ app.on('ready', function() {
                 }
             });
         });
-    // }
+    }
 
     function buildHtmlData(pathArrayValue) {
         var folders = [];
