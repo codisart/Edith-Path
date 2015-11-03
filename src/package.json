@@ -1,5 +1,5 @@
 {
-  "name"    : "edih-path",
+  "name"    : "edith-path",
   "version" : "2.0.1",
   "main"    : "main.js",
   "description" : "A little app to add folders easily to the PATH on Windows",
