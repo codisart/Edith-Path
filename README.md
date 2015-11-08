@@ -15,6 +15,7 @@ Compilation
 
 lancer la ligne de commande
 
+npm install electron-packager -g
 
 node_modules/.bin/electron-packager src/ Edith-path --platform=linux --arch=x64 --version=0.33.3 --out="build/" --cache="cache/" --overwrite
 node_modules/.bin/electron-packager src/ Edith-path --all --version=0.33.3 --out="build/"
