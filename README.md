@@ -15,10 +15,14 @@ Compilation
 
 lancer la ligne de commande
 
-npm install electron-packager -g
+npm install -g electron-packager
+npm install -g innosetup-compiler
 
-node_modules/.bin/electron-packager src/ Edith-path --platform=linux --arch=x64 --version=0.33.3 --out="build/" --cache="cache/" --overwrite
-node_modules/.bin/electron-packager src/ Edith-path --all --version=0.33.3 --out="build/"
+
+innosetup-compiler install/compile_file.iss
+
+electron-packager src/ Edith-path --platform=linux --arch=x64 --version=0.33.3 --out="build/" --cache="cache/" --overwrite
+electron-packager src/ Edith-path --all --version=0.33.3 --out="build/"
 
 
 Release
