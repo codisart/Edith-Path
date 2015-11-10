@@ -41,6 +41,11 @@
             <div class="refresh-list"></div>
         </div>
 
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+              <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="4" stroke-miterlimit="10"/>
+            </svg>
+        </div>
 
         <ul id="folders-list">
         </ul>
@@ -98,7 +103,7 @@
                     folderElementHtml
                         .html(folders[i].path);
                         // .prepend(iconHtml);
-
+                    $('.loader').hide();
                     foldersListHtml.prepend(folderElementHtml);
                 }
             } else {
@@ -116,6 +121,7 @@
 
         $('.folder-input button').on('click', function() {
             ipc.send('add-folders', foldersToAdd);
+            $('.loader').show();
             $('#folders-to-add-list').empty();
             return false;
         });
@@ -130,6 +136,7 @@
 
         $('.refresh-list').on("click", function() {
             ipc.send('refresh-folders', true);
+            $('.loader').show();
         })
 
     </script>
