@@ -61,7 +61,7 @@ app.on('ready', function() {
                         var pathArrayValue = pathParser.parseArray(arg);
                         var newPathStringValue = item.value + ';' + pathArrayValue;
 
-                        regKey.set('Path', Winreg.REG_EXPAND_SZ, newPathStringValue,  function(err) {
+                        regKey.set('Path', Winreg.REG_SZ, newPathStringValue,  function(err) {
                             if (!err) {
                                 event.sender.send('data-folders', buildHtmlData(pathParser.parseString(newPathStringValue)));
                             }
