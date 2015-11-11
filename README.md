@@ -7,24 +7,23 @@ How to use
 -----------
 
 
-You'll need to install PySide.
+You'll need to install node.js et electron.
 
 
 Compilation
 -----------
 
-Installation de python 3
+lancer la ligne de commande
 
-Installation de pyside pour python 3
+npm install -g electron-packager
+npm install -g innosetup-compiler
 
 
-Falcultatif : Installation de cx_freeze 
+innosetup-compiler install/compile_file.iss
+
+electron-packager src/ Edith-path --platform=linux --arch=x64 --version=0.33.3 --out="build/" --cache="cache/" --overwrite
+electron-packager src/ Edith-path --all --version=0.33.3 --out="build/"
 
 
 Release
 -------
-
-
-
-
-

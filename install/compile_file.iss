@@ -6,17 +6,17 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{58462437-D461-42CD-BB81-F3A5EC42E37A}
-AppName=Edith Path
-AppVersion=0.1 alpha
-;AppVerName=Edith Path 0.1 alpha
+AppName=Edith Path Tmp
+AppVersion=2.0.1 alpha
+;AppVerName=Edith Path 2.0.1 alpha
 AppPublisher=punkka
-DefaultDirName={pf}\Edith Path
+DefaultDirName={pf}\Edith Path Tmp
 DisableDirPage=yes
-DefaultGroupName=Edith Path
+DefaultGroupName=Edith Path Tmp
 DisableProgramGroupPage=yes
-LicenseFile=C:\projets\python\Edith-Path\LICENSE
-OutputDir=C:\projets\python\Edith-Path\install
-OutputBaseFilename=Edith_Path_64_setup_0.1_alpha
+LicenseFile=..\LICENSE
+OutputDir=..\setup
+OutputBaseFilename=Edith_Path_64_setup_2.0.1_alpha
 Compression=lzma
 SolidCompression=yes
 
@@ -27,25 +27,25 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\Edith_Path.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\_bz2.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\_ctypes.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\Edith_Path.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\library.zip"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\PySide.QtCore.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\PySide.QtGui.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\PySide.QtNetwork.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\pyside-python3.3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\python33.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\QtCore4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\QtGui4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\QtNetwork4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\shiboken-python3.3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\style.qss"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\projets\python\Edith-Path\build\exe.win-amd64-3.3\unicodedata.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\Edith-path.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\d3dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\libGLESv2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\msvcr120.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\msvcp120.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\node.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\vccorlib120.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\xinput1_3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\icudtl.dat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\natives_blob.bin"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\snapshot_blob.bin"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\content_resources_200_percent.pak"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\content_shell.pak"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\ui_resources_200_percent.pak"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\build\Edith-path-win32-x64\resources\*"; DestDir: "{app}\resources\"; Flags: ignoreversion recursesubdirs
+Source: "..\build\Edith-path-win32-x64\locales\*"; DestDir: "{app}\locales\"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\Edith Path"; Filename: "{app}\Edith_Path.exe"
-Name: "{commondesktop}\Edith Path"; Filename: "{app}\Edith_Path.exe"; Tasks: desktopicon
-
+Name: "{group}\Edith Path Tmp"; Filename: "{app}\Edith_Path.exe"
+Name: "{commondesktop}\Edith Path Tmp"; Filename: "{app}\Edith_Path.exe"; Tasks: desktopicon
