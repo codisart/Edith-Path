@@ -7,9 +7,8 @@ var pathParser = require('codisart_path_parsing');
 var Winreg = require('winreg');
 var fs = require('fs');
 var os = require('os');
-var dialog = require('dialog');
 
-if(process.argv.slice(2).length > 0) {
+if (process.argv.slice(2).length > 0) {
     app.quit();
 }
 
@@ -21,7 +20,6 @@ var mainWindow = null;
 app.on('window-all-closed', function() {
     app.quit();
 });
-// ipc.send('asynchronous-reply', 'pong');
 
 
 // This method will be called when Electron has finished
@@ -40,10 +38,10 @@ app.on('ready', function() {
     // and load the index.html of the app.
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-    if(os.platform() == 'win32') {
+    if (os.platform() == 'win32') {
         var regKey = new Winreg({
-            hive: Winreg.HKLM,                                          // HKEY_CURRENT_USER
-            key:  '\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment' // key containing autostart programs
+            hive: Winreg.HKLM,
+            key:  '\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment'
         });
 
         webContents.on('did-finish-load', function() {
@@ -61,7 +59,7 @@ app.on('ready', function() {
                         var pathArrayValue = pathParser.parseArray(arg);
                         var newPathStringValue = item.value + ';' + pathArrayValue;
 
-                        regKey.set('Path', Winreg.REG_SZ, newPathStringValue,  function(err) {
+                        regKey.set('Path', Winreg.REG_SZ, newPathStringValue, function(err) {
                             if (!err) {
                                 event.sender.send('data-folders', buildHtmlData(pathParser.parseString(newPathStringValue)));
                             }
@@ -88,7 +86,7 @@ app.on('ready', function() {
 
         var arrayLength = pathArrayValue.length;
         for (var i = 0; i < arrayLength; i++) {
-            var folder = {path : pathArrayValue[i]};
+            var folder = {path: pathArrayValue[i]};
 
             try {
                 var stats = fs.statSync(pathArrayValue[i]);
@@ -97,8 +95,7 @@ app.on('ready', function() {
                 } else {
                     folder.isValidDirectory = false;
                 }
-            }
-            catch (e) {
+            } catch (e) {
                 folder.isValidDirectory = false;
             }
 
