@@ -9,6 +9,7 @@
     <link href='https://fonts.googleapis.com/css?family=Material+Icons' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css?version=2.0.1" >
 </head>
+
 <body>
 
     <header class="bg-color-primary altitude-1">
@@ -38,7 +39,7 @@
     <section class="list-path altitude-2">
         <div class="section-header">
             <h2>PATH actuel</h2>
-            <div class="js-refresh-list"></div>
+            <div class="refresh-list"></div>
         </div>
 
         <div class="loader">
@@ -134,7 +135,7 @@
             addFolder(folderPath);
         });
 
-        $('.js-refresh-list').on("click", function() {
+        $('.refresh-list').on("click", function() {
             ipc.send('refresh-folders', true);
             $('.loader').show();
         })
