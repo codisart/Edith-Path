@@ -1,3 +1,3 @@
-/build/*
-/install/*
-/cache/
+/build/cache/*
+/build/install/*
+/build/release/*

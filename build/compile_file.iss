@@ -6,16 +6,16 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{58462437-D461-42CD-BB81-F3A5EC42E37A}
-AppName=Edith Path Tmp
+AppName=Edith Path
 AppVersion=2.0.1 alpha
 ;AppVerName=Edith Path 2.0.1 alpha
 AppPublisher=punkka
-DefaultDirName={pf}\Edith Path Tmp
+DefaultDirName={pf}\Edith Path
 DisableDirPage=yes
-DefaultGroupName=Edith Path Tmp
+DefaultGroupName=Edith Path
 DisableProgramGroupPage=yes
 LicenseFile=..\LICENSE
-OutputDir=..\setup
+OutputDir=build\install
 OutputBaseFilename=Edith_Path_64_setup_2.0.1_alpha
 Compression=lzma
 SolidCompression=yes
