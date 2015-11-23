@@ -1,3 +1,4 @@
+/* jshint jquery: true */
 'use strict';
 
 var ipc = require('ipc');
@@ -31,7 +32,7 @@ function addFolder(path) {
 
 ipc.on('data-folders', function(folders) {
 	var arrayLength = folders.length;
-	var foldersListHtml = $('#folders-list').empty();;
+	var foldersListHtml = $('#folders-list').empty();
 
 	if(arrayLength > 0) {
 		for (var i = 0; i < arrayLength; i++) {
