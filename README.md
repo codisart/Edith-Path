@@ -21,7 +21,7 @@ npm install -g innosetup-compiler
 
 innosetup-compiler build/compile_file.iss
 
-electron-packager src/ Edith-path --platform=linux --arch=x64 --version=0.33.3 --out="build/release/" --cache="build/cache/" --overwrite
+electron-packager . Edith-path --platform=win32 --arch=x64 --version=0.35.1 --out="build/release/" --cache="build/cache/" --overwrite --ignore ="build"
 electron-packager src/ Edith-path --all --version=0.33.3 --out="build/release/"
 
 
