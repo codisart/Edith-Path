@@ -1,12 +1,19 @@
 'use strict';
 
+var os = require('os');
+
+/* The app should not run on others platform *//*
+if (os.platform() == 'win32') {
+    app.quit();
+}
+//*/
+
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var ipc = require('ipc');
 var pathParser = require('codisart_path_parsing');
 var Winreg = require('winreg');
 var fs = require('fs');
-var os = require('os');
 
 if (process.argv.slice(2).length > 0) {
     app.quit();
