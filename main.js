@@ -1,37 +1,38 @@
 'use strict';
 
-var os = require('os');
+var Application = require('app');  // Module to control application life.
+var OperatingSystem = require('os');
 
 /* The app should not run on others platform *//*
-if (os.platform() == 'win32') {
-    app.quit();
+if (OperatingSystem.platform() == 'win32') {
+    Application.quit();
 }
 //*/
 
-var app = require('app');  // Module to control application life.
-var BrowserWindow = require('browser-window');  // Module to create native browser window.
-var ipc = require('ipc');
 var pathParser = require('codisart_path_parsing');
 var Winreg = require('winreg');
-var fs = require('fs');
+var FileSystem = require('fs');
 
 if (process.argv.slice(2).length > 0) {
-    app.quit();
+    Application.quit();
 }
+
+var BrowserWindow = require('browser-window');  // Module to create native browser window.
+var ipc = require('ipc');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function() {
-    app.quit();
+Application.on('window-all-closed', function() {
+    Application.quit();
 });
 
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-app.on('ready', function() {
+Application.on('ready', function() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 750,
@@ -45,7 +46,7 @@ app.on('ready', function() {
     // and load the index.html of the app.
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-    if (os.platform() == 'win32') {
+    if (OperatingSystem.platform() == 'win32') {
         var regKey = new Winreg({
             hive: Winreg.HKLM,
             key:  '\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment'
@@ -96,7 +97,7 @@ app.on('ready', function() {
             var folder = {path: pathArrayValue[i]};
 
             try {
-                var stats = fs.statSync(pathArrayValue[i]);
+                var stats = FileSystem.statSync(pathArrayValue[i]);
                 if (stats.isDirectory()) {
                     folder.isValidDirectory = true;
                 } else {
