@@ -1,6 +1,6 @@
 'use strict';
 
-var Application = require('app');  // Module to control application life.
+var Application     = require('app');  // Module to control application life.
 var OperatingSystem = require('os');
 
 /* The app should not run on others platform *//*
@@ -9,11 +9,10 @@ if (OperatingSystem.platform() == 'win32') {
 }
 //*/
 
-var pathParser = require('codisart_path_parsing');
-var PathParserBis = require('./app/libs/path/parser');
-console.log(PathParserBis);
-var Winreg = require('winreg');
-var FileSystem = require('fs');
+var FileSystem  = require('fs');
+var Winreg      = require('winreg');
+
+var PathParser  = require('./app/libs/path/parser');
 
 if (process.argv.slice(2).length > 0) {
     Application.quit();
@@ -30,7 +29,6 @@ var mainWindow = null;
 Application.on('window-all-closed', function() {
     Application.quit();
 });
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -57,7 +55,7 @@ Application.on('ready', function() {
         webContents.on('did-finish-load', function() {
             regKey.get('Path', function(err, item) {
                 if (!err) {
-                    webContents.send('data-folders', buildHtmlData(pathParser.parseString(item.value)));
+                    webContents.send('data-folders', buildHtmlData(PathParser.parseString(item.value)));
                 }
             });
         });
@@ -66,12 +64,12 @@ Application.on('ready', function() {
             regKey.get('Path', function(err, item) {
                 if (!err) {
                     try {
-                        var pathArrayValue = pathParser.parseArray(arg);
+                        var pathArrayValue = PathParser.parseArray(arg);
                         var newPathStringValue = item.value + ';' + pathArrayValue;
 
                         regKey.set('Path', Winreg.REG_SZ, newPathStringValue, function(err) {
                             if (!err) {
-                                event.sender.send('data-folders', buildHtmlData(pathParser.parseString(newPathStringValue)));
+                                event.sender.send('data-folders', buildHtmlData(PathParser.parseString(newPathStringValue)));
                             }
                         });
                     }
@@ -85,7 +83,7 @@ Application.on('ready', function() {
         ipc.on('refresh-folders', function(event, arg) {
             regKey.get('Path', function(err, item) {
                 if (!err) {
-                    webContents.send('data-folders', buildHtmlData(pathParser.parseString(item.value)));
+                    webContents.send('data-folders', buildHtmlData(PathParser.parseString(item.value)));
                 }
             });
         });
