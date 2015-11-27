@@ -10,6 +10,8 @@ if (OperatingSystem.platform() == 'win32') {
 //*/
 
 var pathParser = require('codisart_path_parsing');
+var PathParserBis = require('./app/libs/path/parser');
+console.log(PathParserBis);
 var Winreg = require('winreg');
 var FileSystem = require('fs');
 
