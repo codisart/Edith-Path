@@ -6,9 +6,8 @@ Edith-Path
 
 A little tool allowing to add easily a folder to the environnement variable PATH
 
-How to use
+How to dev
 -----------
-
 
 You'll need to install node.js et electron.
 
@@ -16,19 +15,14 @@ You'll need to install node.js et electron.
 Compilation
 -----------
 
-lancer la ligne de commande
+Tous les commandes sont des scripts npm
+    - tools : installe les modules nécessaires au packaging.
 
-npm install -g electron-packager
-npm install -g innosetup-compiler
+    - setup : Crée un installauer windows
 
+    - package : Crée la version packagée de l'app
 
-innosetup-compiler build/compile_file.iss
-
-electron-packager . Edith-path --platform=win32 --arch=x64 --version=0.35.1 --out="build/release/" --cache="build/cache/" --overwrite --ignore ="build"
-electron-packager src/ Edith-path --all --version=0.33.3 --out="build/release/"
-
-mt.exe -manifest "Edith_Path.exe.manifest" -outputresource:"release/Edith-path-win32-x64/Edith-path.exe"
-
+    - manifest : Intégre un manifest avec des droits élévés
 
 Release
 -------

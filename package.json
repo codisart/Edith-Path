@@ -1,16 +1,31 @@
 {
-  "name"    : "edith-path",
-  "version" : "2.0.1",
-  "main"    : "main.js",
-  "description" : "A little app to add folders easily to the PATH on Windows",
-  "author" : "Louis CELIER",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/codisart/Edith-Path"
+  "name": "edith-path",
+  "version": "2.0.1",
+  "main": "main.js",
+  "description": "A little app to add folders easily to the PATH on Windows",
+  "author": "Louis CELIER",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codisart/Edith-Path"
   },
   "dependencies": {
     "winreg": "~0.0.12",
     "jquery": "~2.1.4"
+  },
+  "scripts": {
+    "tools": "sudo npm install -g electron-packager innosetup-compiler",
+    
+    "package": "electron-packager . Edith-path --platform=win32 --arch=x64 --version=0.35.1 --out='build/release/' --cache='build/cache/' --overwrite --ignore='build'",
+    "manifest": "mt.exe -manifest 'Edith_Path.exe.manifest' -outputresource:'release/Edith-path-win32-x64/Edith-path.exe'",
+    "setup": "innosetup-compiler build/compile_file.iss",
+
+    "build": "npm run build:setup",
+
+    "build:setup": "npm run setup",
+    "prebuild:setup": "npm run build:manifest",
+
+    "build:manifest": "npm run manifest",
+    "prebuild:manifest": "npm run package"
   },
   "license": "MIT"
 }
