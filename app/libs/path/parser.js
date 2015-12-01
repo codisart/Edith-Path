@@ -1,5 +1,5 @@
 var parseString = function(string) {
-	if(typeof string !== 'string') {
+	if (typeof string !== 'string') {
 		return null;
 	}
 
@@ -7,14 +7,14 @@ var parseString = function(string) {
 };
 
 var parseArray = function(array) {
-	if(typeof array !== 'object' || Object.prototype.toString.call(array) !== '[object Array]') {
+	if (typeof array !== 'object' || Object.prototype.toString.call(array) !== '[object Array]') {
 		return null;
 	}
 	var stringImploded = '';
 
 	var length = array.length;
 	for (var i = 0; i < length; i++) {
-		if(typeof array[i] !== 'string' || array[i].indexOf(";")  > -1) {
+		if (typeof array[i] !== 'string' || array[i].indexOf(";")  > -1) {
 			throw "Error : " + typeof array[i] + array[i].indexOf(";");
 		}
 		stringImploded += i > 0 ? ';' : '';
