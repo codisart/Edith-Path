@@ -18,13 +18,10 @@ function addFolder(path) {
 		foldersToAdd.push(path);
 
 		var folderElementHtml = $('<li/>');
-		var iconHtml = $('<i/>')
-			.attr('class', 'md-icon dp48')
-			.html('check_circle');
 
 		folderElementHtml
-			.html(path)
-			.prepend(iconHtml);
+			.attr('class', 'valid-path')
+			.html(path);
 
 		$('#folders-to-add-list').prepend(folderElementHtml);
 	}
@@ -75,8 +72,9 @@ $('.folder-input button').on('click', function() {
 });
 
 $('#holder').on("drop", function(event) {
-	event.preventDefault();
+    event.preventDefault();
 	event.stopPropagation();
+    console.log('success');
 	var folderPath = event.originalEvent.dataTransfer.files[0].path;
 
 	addFolder(folderPath);
