@@ -14,9 +14,9 @@ DefaultDirName={pf}\Edith Path
 DisableDirPage=yes
 DefaultGroupName=Edith Path
 DisableProgramGroupPage=yes
-LicenseFile=..\LICENSE
-OutputDir=build\install
-OutputBaseFilename=Edith_Path_64_setup_2.0.1_alpha
+LicenseFile=..\..\LICENSE
+OutputDir=..\install
+OutputBaseFilename=Edith_Path_64_setup_2.0.0_alpha
 Compression=lzma
 SolidCompression=yes
 
@@ -27,25 +27,25 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\build\Edith-path-win32-x64\Edith-path.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\d3dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\libGLESv2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\msvcr120.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\msvcp120.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\node.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\vccorlib120.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\xinput1_3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\icudtl.dat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\natives_blob.bin"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\snapshot_blob.bin"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\content_resources_200_percent.pak"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\content_shell.pak"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\ui_resources_200_percent.pak"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\build\Edith-path-win32-x64\resources\*"; DestDir: "{app}\resources\"; Flags: ignoreversion recursesubdirs
-Source: "..\build\Edith-path-win32-x64\locales\*"; DestDir: "{app}\locales\"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\Edith-path.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\d3dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\libGLESv2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\msvcr120.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\msvcp120.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\node.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\vccorlib120.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\xinput1_3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\icudtl.dat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\natives_blob.bin"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\snapshot_blob.bin"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\content_resources_200_percent.pak"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\content_shell.pak"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\ui_resources_200_percent.pak"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\release\Edith-path-win32-x64\resources\*"; DestDir: "{app}\resources\"; Flags: ignoreversion recursesubdirs
+Source: "..\release\Edith-path-win32-x64\locales\*"; DestDir: "{app}\locales\"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\Edith Path Tmp"; Filename: "{app}\Edith_Path.exe"
-Name: "{commondesktop}\Edith Path Tmp"; Filename: "{app}\Edith_Path.exe"; Tasks: desktopicon
+Name: "{group}\Edith Path"; Filename: "{app}\Edith-Path.exe"
+Name: "{commondesktop}\Edith Path"; Filename: "{app}\Edith-Path.exe"; Tasks: desktopicon
