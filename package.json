@@ -13,11 +13,11 @@
     "jquery": "~2.1.4"
   },
   "scripts": {
-    "tools": "sudo npm install -g electron-packager innosetup-compiler",
-    
-    "package": "electron-packager . Edith-path --platform=win32 --arch=x64 --version=0.35.1 --out='build/release/' --cache='build/cache/' --overwrite --ignore='build'",
-    "manifest": "mt.exe -manifest 'Edith_Path.exe.manifest' -outputresource:'release/Edith-path-win32-x64/Edith-path.exe'",
-    "setup": "innosetup-compiler build/compile_file.iss",
+    "tools": "npm install -g electron-packager innosetup-compiler",
+
+    "package": "electron-packager . Edith-path --platform=win32 --arch=x64 --version=0.35.1 --out=build/release/ --cache=build/cache/ --overwrite --ignore=build",
+    "manifest": "node build/scripts/mt.js",
+    "setup": "innosetup-compiler build/scripts/compile_file.iss",
 
     "build": "npm run build:setup",
 
