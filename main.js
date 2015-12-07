@@ -19,7 +19,7 @@ if (process.argv.slice(2).length > 0) {
 }
 
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
-var ipc = require('ipc');
+const IpcMain = require('electron').ipcMain;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -44,7 +44,7 @@ Application.on('ready', function() {
     var webContents = mainWindow.webContents;
 
     // and load the index.html of the app.
-    mainWindow.loadUrl('file://' + __dirname + '/index.html');
+    mainWindow.loadURL('file://' + __dirname + '/index.html');
 
     if (OperatingSystem.platform() == 'win32') {
         var regKey = new Winreg({
@@ -60,7 +60,7 @@ Application.on('ready', function() {
             });
         });
 
-        ipc.on('add-folders', function(event, arg) {
+        IpcMain.on('add-folders', function(event, arg) {
             regKey.get('Path', function(err, item) {
                 if (!err) {
                     try {
@@ -80,7 +80,7 @@ Application.on('ready', function() {
             });
         });
 
-        ipc.on('refresh-folders', function(event, arg) {
+        IpcMain.on('refresh-folders', function(event, arg) {
             regKey.get('Path', function(err, item) {
                 if (!err) {
                     webContents.send('data-folders', buildHtmlData(PathParser.parseString(item.value)));

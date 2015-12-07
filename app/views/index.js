@@ -1,7 +1,7 @@
 /* jshint jquery: true */
 'use strict';
 
-var ipc = require('ipc');
+const IpcRenderer = require('electron').ipcRenderer;
 var remote = require('remote');
 var dialog = remote.require('dialog');
 window.$ = window.jQuery = require('jquery');
@@ -27,7 +27,7 @@ function addFolder(path) {
 	}
 }
 
-ipc.on('data-folders', function(folders) {
+IpcRenderer.on('data-folders', function(folders) {
 	var arrayLength = folders.length;
 	var foldersListHtml = $('#folders-list').empty();
 
@@ -65,7 +65,7 @@ $('.choose-folder').on('click', function() {
 });
 
 $('.folder-input button').on('click', function() {
-	ipc.send('add-folders', foldersToAdd);
+	IpcRenderer.send('add-folders', foldersToAdd);
 	$('.loader').show();
 	$('#folders-to-add-list').empty();
 	return false;
@@ -81,6 +81,6 @@ $('#holder').on("drop", function(event) {
 });
 
 $('.refresh-list').on("click", function() {
-	ipc.send('refresh-folders', true);
+	IpcRenderer.send('refresh-folders', true);
 	$('.loader').show();
 });
