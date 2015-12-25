@@ -27,7 +27,8 @@ function addFolder(path) {
 	}
 }
 
-IpcRenderer.on('data-folders', function(folders) {
+IpcRenderer.on('data-folders', function(event, folders) {
+  console.log(folders);
 	var arrayLength = folders.length;
 	var foldersListHtml = $('#folders-list').empty();
 
