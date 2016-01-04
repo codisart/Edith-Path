@@ -15,7 +15,7 @@ You'll need to install node.js et electron.
 Compilation
 -----------
 
-Tous les commandes sont des scripts npm
+Tous les commandes sont des scripts npm (npm run ?)
     - tools : installe les modules nécessaires au packaging.
 
     - setup : Crée un installauer windows
@@ -23,6 +23,11 @@ Tous les commandes sont des scripts npm
     - package : Crée la version packagée de l'app
 
     - manifest : Intégre un manifest avec des droits élévés
+
+go
+  set GOPATH=C:\Go\src\
+  go get golang.org/x/sys/windows/registry
+  go build test.go
 
 Release
 -------
