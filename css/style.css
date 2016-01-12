@@ -73,12 +73,11 @@ section.list-path {
 }
 
 div.choose-folder {
-    background-color: white;
     background-repeat: no-repeat;
     background-image: url(../img/ic_add_circle_black_24px.svg);
     background-position: -5px -5px;
     background-size: 50px;
-    
+
     border-radius: 40px;
     cursor: pointer;
 
