@@ -20,7 +20,7 @@ function addFolder(path) {
 		var folderElementHtml = $('<li/>');
 
 		folderElementHtml
-			.attr('class', 'valid-path')
+			.attr('class', 'valid-path icon-teal')
 			.html(path);
 
 		$('#folders-to-add-list').prepend(folderElementHtml);
@@ -28,7 +28,6 @@ function addFolder(path) {
 }
 
 IpcRenderer.on('data-folders', function(event, folders) {
-  console.log(folders);
 	var arrayLength = folders.length;
 	var foldersListHtml = $('#folders-list').empty();
 
@@ -40,10 +39,10 @@ IpcRenderer.on('data-folders', function(event, folders) {
 
 			if(folders[i].isValidDirectory) {
 				// iconHtml.html('check_circle');
-				folderElementHtml.attr('class', 'valid-path');
+				folderElementHtml.attr('class', 'valid-path icon-red');
 			} else {
 				// iconHtml.html('error');
-				folderElementHtml.attr('class', 'invalid-path');
+				folderElementHtml.attr('class', 'invalid-path icon-red');
 			}
 
 			folderElementHtml
