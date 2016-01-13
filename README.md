@@ -25,9 +25,7 @@ Tous les commandes sont des scripts npm (npm run ?)
     - manifest : Intégre un manifest avec des droits élévés
 
 go
-  set GOPATH=C:\Go\src\
-  go get golang.org/x/sys/windows/registry
-  go build test.go
+  go build -ldflags -H=windowsgui test.go
 
 Release
 -------
