@@ -25,7 +25,9 @@
     "prebuild:setup": "npm run build:manifest",
 
     "build:manifest": "npm run manifest",
-    "prebuild:manifest": "npm run package"
+    "prebuild:manifest": "npm run package",
+
+    "go": ".\\build\\scripts\\go_builder.bat"
   },
   "license": "MIT"
 }
