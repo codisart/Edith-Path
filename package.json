@@ -15,19 +15,15 @@
   "scripts": {
     "tools": "npm install -g electron-packager innosetup-compiler",
 
+    "go": ".\\build\\scripts\\go_builder.bat",
+
+	"prepackage": "npm run tools",
     "package": "electron-packager . Edith-path --platform=win32 --arch=x64 --version=0.35.1 --out=build/release/ --cache=build/cache/ --overwrite --ignore=build",
-    "manifest": "node build/scripts/mt.js",
+
+    "presetup": "npm run package & npm run go",
     "setup": "innosetup-compiler build/scripts/compile_file.iss",
 
-    "build": "npm run build:setup",
-
-    "build:setup": "npm run setup",
-    "prebuild:setup": "npm run build:manifest",
-
-    "build:manifest": "npm run manifest",
-    "prebuild:manifest": "npm run package",
-
-    "go": ".\\build\\scripts\\go_builder.bat"
+    "build": "npm run setup"
   },
   "license": "MIT"
 }
