@@ -39,7 +39,7 @@ IpcRenderer.on('data-folders', function(event, folders) {
 
 			if(folders[i].isValidDirectory) {
 				// iconHtml.html('check_circle');
-				folderElementHtml.attr('class', 'valid-path icon-red');
+				folderElementHtml.attr('class', 'valid-path icon-teal');
 			} else {
 				// iconHtml.html('error');
 				folderElementHtml.attr('class', 'invalid-path icon-red');
