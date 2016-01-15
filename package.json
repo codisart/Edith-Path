@@ -13,17 +13,19 @@
     "jquery": "~2.1.4"
   },
   "scripts": {
-    "tools": "npm install -g electron-packager innosetup-compiler",
+    "tools": "npm install -g electron-packager@5.0.2 innosetup-compiler",
 
     "go": ".\\build\\scripts\\go_builder.bat",
 
-	"prepackage": "npm run tools",
-    "package": "electron-packager . Edith-path --platform=win32 --arch=x64 --version=0.35.1 --out=build/release/ --cache=build/cache/ --overwrite --ignore=build",
+    "package:ia32": "electron-packager . Edith-path --platform=win32 --arch=ia32 --version=0.35.1 --out=build/release/ --cache=build/cache/ --overwrite --ignore=build --ignore=go",
+    "package:x64": "electron-packager . Edith-path --platform=win32 --arch=x64 --version=0.35.1 --out=build/release/ --cache=build/cache/ --overwrite --ignore=build --ignore=go",
+    "package": "npm run package:ia32 & npm run package:x64",
 
-    "presetup": "npm run package & npm run go",
-    "setup": "innosetup-compiler build/scripts/compile_file.iss",
+    "setup:ia32": "innosetup-compiler build/scripts/ia32/compile_file.iss",
+    "setup:x64": "innosetup-compiler build/scripts/x64/compile_file.iss",
+    "setup": "npm run setup:ia32 & npm run setup:x64",
 
-    "build": "npm run setup"
+    "build": "npm run package & npm run go & npm run setup"
   },
   "license": "MIT"
 }
