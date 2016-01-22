@@ -9,6 +9,7 @@ if (OperatingSystem.platform() == 'win32') {
 }
 //*/
 
+var ChildProcess = require('child_process');
 var FileSystem  = require('fs');
 var Winreg      = require('winreg');
 
@@ -55,7 +56,11 @@ Application.on('ready', function() {
         webContents.on('did-finish-load', function() {
             regKey.get('Path', function(err, item) {
                 if (!err) {
-                    webContents.send('data-folders', buildHtmlData(PathParser.parseString(item.value)));
+					buildHtmlData(PathParser.parseString(item.value)).then(
+						function (values) {
+                    		webContents.send('data-folders', values);
+						}
+					);
                 }
             });
         });
@@ -69,7 +74,11 @@ Application.on('ready', function() {
 
                         regKey.set('Path', Winreg.REG_SZ, newPathStringValue, function(err) {
                             if (!err) {
-                                event.sender.send('data-folders', buildHtmlData(PathParser.parseString(newPathStringValue)));
+								buildHtmlData(PathParser.parseString(item.value)).then(
+									function (values) {
+			                    		webContents.send('data-folders', values);
+									}
+								);
                             }
                         });
                     }
@@ -82,8 +91,12 @@ Application.on('ready', function() {
 
         IpcMain.on('refresh-folders', function(event, arg) {
             regKey.get('Path', function(err, item) {
-                if (!err) {
-                    webContents.send('data-folders', buildHtmlData(PathParser.parseString(item.value)));
+	            if (!err) {
+					buildHtmlData(PathParser.parseString(item.value)).then(
+						function (values) {
+                    		webContents.send('data-folders', values);
+						}
+					);
                 }
             });
         });
@@ -94,23 +107,44 @@ Application.on('ready', function() {
 
         var arrayLength = pathArrayValue.length;
         for (var i = 0; i < arrayLength; i++) {
-            var folder = {path: pathArrayValue[i]};
+            var folder = {
+				path: pathArrayValue[i],
+				exists: false
+			}
+			folders.push(folder);
+		}
 
-            try {
-                var stats = FileSystem.statSync(pathArrayValue[i]);
-                if (stats.isDirectory()) {
-                    folder.isValidDirectory = true;
-                } else {
-                    folder.isValidDirectory = false;
-                }
-            } catch (e) {
-                folder.isValidDirectory = false;
-            }
+		var promises = folders.map(function(folder) {
+			return new Promise(function (resolve, reject) {
+				FileSystem.stat(folder.path, function(err, stats) {
+					if(err) {
+						ChildProcess.exec("echo " + folder.path, function(stderr, stdout, err) {
+							if (!err && folder.path != stdout.trim()) {
+								FileSystem.stat(stdout.trim(), function(err, stats) {
+									if(err) {
+										folder.exists = false;
+									} else {
+										folder.exists = stats.isDirectory();
+									}
+									resolve(folder);
+								})
+							}
+							folder.exists = false;
+							resolve(folder);
+						});
+					} else {
+						folder.exists = stats.isDirectory();
+						resolve(folder)
+					}
+				});
+			}).then(
+				function (folder) {
+					return folder
+				}
+			);
+		});
 
-            folders.push(folder);
-        }
-
-        return folders;
+		return Promise.all(promises);
     }
 
     // Emitted when the window is closed.

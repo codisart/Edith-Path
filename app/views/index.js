@@ -37,7 +37,7 @@ IpcRenderer.on('data-folders', function(event, folders) {
 			// var iconHtml = $('<i/>')
 			//     .attr('class', 'md-icon dp48');
 
-			if(folders[i].isValidDirectory) {
+			if(folders[i].exists) {
 				// iconHtml.html('check_circle');
 				folderElementHtml.attr('class', 'valid-path icon-teal');
 			} else {
