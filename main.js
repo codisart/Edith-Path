@@ -70,17 +70,20 @@ Application.on('ready', function() {
                 if (!err) {
                     try {
                         var pathArrayValue = PathParser.parseArray(arg);
-                        var newPathStringValue = item.value + ';' + pathArrayValue;
+						var newPathStringValue = '"' + item.value + ';' + pathArrayValue + '"';
 
-                        regKey.set('Path', Winreg.REG_SZ, newPathStringValue, function(err) {
-                            if (!err) {
+						ChildProcess.exec("cd build/bin & edith-path.exe " + newPathStringValue, function (error, stdout, stderr) {
+							if (error) {
+								console.log('exec error: ' + error);
+							} else {
 								buildHtmlData(PathParser.parseString(item.value)).then(
 									function (values) {
+										console.log(values);
 			                    		webContents.send('data-folders', values);
 									}
 								);
-                            }
-                        });
+							}
+						});
                     }
                     catch (e) {
                         event.sender.send('error-paths', 'plop');
