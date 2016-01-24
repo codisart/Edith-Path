@@ -29,3 +29,12 @@ go
 
 Release
 -------
+
+Inno Setup
+----------
+
+[Registry]
+Root: HKCR; Subkey: "Directory\shell\Add to Path"; Flags: uninsdeletekeyifempty
+Root: HKCR; Subkey: "Directory\shell\Add to Path\command"; Flags: uninsdelete; ValueType: string; ValueName: ""; ValueData: "{app}"
+Root: HKCR; Subkey: "Directory\Background\shell\Add to Path"; Flags: uninsdeletekeyifempty
+Root: HKCR; Subkey: "Directory\Background\shell\Add to Path\command"; Flags: uninsdelete; ValueType: string; ValueName: ""; ValueData: "{app}"
