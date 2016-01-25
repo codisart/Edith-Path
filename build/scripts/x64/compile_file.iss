@@ -6,17 +6,24 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{58462437-D461-42CD-BB81-F3A5EC42E37A}
+
 AppName=Edith Path
-AppVersion=2.0.0 alpha
-;AppVerName=Edith Path 2.0.0 alpha
+AppVersion=2.0.0-alpha
+
 AppPublisher=punkka
 DefaultDirName={pf}\Edith Path
 DisableDirPage=yes
+
 DefaultGroupName=Edith Path
+
 DisableProgramGroupPage=yes
+
 LicenseFile=..\..\..\LICENSE
 OutputDir=..\..\install
+
+; argument cli ?
 OutputBaseFilename=Edith_Path_x64_setup_2.0.0_alpha
+
 Compression=lzma
 SolidCompression=yes
 
@@ -51,3 +58,9 @@ Source: "..\..\release\Edith-path-win32-x64\locales\*"; DestDir: "{app}\locales\
 [Icons]
 Name: "{group}\Edith Path"; Filename: "{app}\Edith-Path.exe"
 Name: "{commondesktop}\Edith Path"; Filename: "{app}\Edith-Path.exe"; Tasks: desktopicon
+
+[Registry]
+Root: HKCR; Subkey: "Directory\shell\Add to Path"; Flags: uninsdeletekeyifempty
+Root: HKCR; Subkey: "Directory\shell\Add to Path\command"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "{app}\Edith-Path.exe %1"
+Root: HKCR; Subkey: "Directory\Background\shell\Add to Path"; Flags: uninsdeletekeyifempty
+Root: HKCR; Subkey: "Directory\Background\shell\Add to Path\command"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "{app}\Edith-Path.exe %V"
