@@ -134,8 +134,8 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
 	        for (var i = 0; i < arrayLength; i++) {
 	            var folder = {
 					path: pathArrayValue[i],
-					exists: false
-				}
+					exists: false,
+				};
 				folders.push(folder);
 			}
 
@@ -152,19 +152,19 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
 											folder.exists = stats.isDirectory();
 										}
 										resolve(folder);
-									})
+									});
 								}
 								folder.exists = false;
 								resolve(folder);
 							});
 						} else {
 							folder.exists = stats.isDirectory();
-							resolve(folder)
+							resolve(folder);
 						}
 					});
 				}).then(
 					function (folder) {
-						return folder
+						return folder;
 					}
 				);
 			});
