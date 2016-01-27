@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "winreg": "~0.0.12",
-    "jquery": "~2.1.4"
+    "jquery": "~2.2.0"
   },
   "scripts": {
     "tools": "npm install -g electron-packager@5.0.2 innosetup-compiler",
