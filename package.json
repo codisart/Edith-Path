@@ -17,8 +17,8 @@
 
     "go": ".\\build\\scripts\\go_builder.bat",
 
-    "package:ia32": "electron-packager . Edith-path --platform=win32 --arch=ia32 --version=0.35.1 --out=build/release/ --cache=build/cache/ --overwrite --ignore=build --ignore=go",
-    "package:x64": "electron-packager . Edith-path --platform=win32 --arch=x64 --version=0.35.1 --out=build/release/ --cache=build/cache/ --overwrite --ignore=build --ignore=go",
+    "package:ia32": "electron-packager . Edith-path --platform=win32 --arch=ia32 --version=0.35.1 --out=build/release/ --cache=build/cache/ --overwrite --ignore=build --ignore=go --ignore=config/dev.js",
+    "package:x64": "electron-packager . Edith-path --platform=win32 --arch=x64 --version=0.35.1 --out=build/release/ --cache=build/cache/ --overwrite --ignore=build --ignore=go --ignore=config/dev.js",
     "package": "npm run package:ia32 & npm run package:x64",
 
     "setup:ia32": "innosetup-compiler build/scripts/ia32/compile_file.iss",

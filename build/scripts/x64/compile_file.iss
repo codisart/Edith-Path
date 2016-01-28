@@ -51,7 +51,7 @@ Source: "..\..\release\Edith-path-win32-x64\content_shell.pak"; DestDir: "{app}"
 Source: "..\..\release\Edith-path-win32-x64\ui_resources_200_percent.pak"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\bin\edith-path.exe"; DestDir: "{app}\bin\"; Flags: ignoreversion
 Source: "..\..\bin\edith-path.exe.manifest"; DestDir: "{app}\bin\"; Flags: ignoreversion
-Source: "..\..\release\Edith-path-win32-x64\resources\*"; DestDir: "{app}\resources\"; Flags: ignoreversion recursesubdirs
+Source: "..\..\release\Edith-path-win32-x64\resources\*"; Excludes: "release.js"; DestDir: "{app}\resources\"; Flags: ignoreversion recursesubdirs
 Source: "..\..\release\Edith-path-win32-x64\locales\*"; DestDir: "{app}\locales\"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

@@ -7,6 +7,18 @@ if (OperatingSystem.platform() != 'win32') {
     Application.quit();
 }
 
+try {
+	var CONF = require('./config/dev.js')
+}
+catch (e) {
+	try {
+		var CONF = require('./config/release.js')
+	}
+	catch (e) {
+		var CONF = require('./config/setup.js')
+	}
+}
+
 var ChildProcess = require('child_process');
 var FileSystem = require('fs');
 var Winreg = require('winreg');
@@ -36,8 +48,7 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
 				}
 				try {
 					var newPathStringValue = '"' + item.value + ';' + process.argv[1] + '"';
-
-					ChildProcess.exec("cd ../../bin & edith-path.exe " + newPathStringValue, function (error, stdout, stderr) {
+					ChildProcess.exec("cd " + CONF.golang.path + " & edith-path.exe " + newPathStringValue, function (error, stdout, stderr) {
 						Application.quit();
 					});
 				}
@@ -94,8 +105,7 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
 	                try {
 	                    var pathArrayValue = PathParser.parseArray(arg);
 						var newPathStringValue = '"' + item.value + ';' + pathArrayValue + '"';
-
-						ChildProcess.exec("cd build/bin & edith-path.exe " + newPathStringValue, function (error, stdout, stderr) {
+						ChildProcess.exec("cd " + CONF.golang.path + " & edith-path.exe " + newPathStringValue, function (error, stdout, stderr) {
 							if (error) {
 								console.log('exec error: ' + error);
 							} else {
