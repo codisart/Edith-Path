@@ -53,6 +53,7 @@ Source: "..\..\bin\edith-path.exe"; DestDir: "{app}\bin\"; Flags: ignoreversion
 Source: "..\..\bin\edith-path.exe.manifest"; DestDir: "{app}\bin\"; Flags: ignoreversion
 Source: "..\..\release\Edith-path-win32-x64\resources\*"; Excludes: "release.js"; DestDir: "{app}\resources\"; Flags: ignoreversion recursesubdirs
 Source: "..\..\release\Edith-path-win32-x64\locales\*"; DestDir: "{app}\locales\"; Flags: ignoreversion
+Source: "..\..\..\backup.bat"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -64,3 +65,6 @@ Root: HKCR; Subkey: "Directory\shell\Add to Path"; Flags: uninsdeletekeyifempty
 Root: HKCR; Subkey: "Directory\shell\Add to Path\command"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "{app}\Edith-Path.exe %1"
 Root: HKCR; Subkey: "Directory\Background\shell\Add to Path"; Flags: uninsdeletekeyifempty
 Root: HKCR; Subkey: "Directory\Background\shell\Add to Path\command"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "{app}\Edith-Path.exe %V"
+
+[Run]
+Filename: "{app}\backup.bat"
