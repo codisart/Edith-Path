@@ -29,7 +29,3 @@ go
 
 Release
 -------
-
-Parsing Windows variables
---------
-"\"%SystemRoot^%\""

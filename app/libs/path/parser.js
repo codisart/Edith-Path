@@ -23,5 +23,13 @@ var parseArray = function(array) {
 	return stringImploded;
 };
 
+var addCarat = function(string) {
+	var regex = /(%)([^\\;]+)(%)/g;
+
+	return string.replace(regex, "$1$2^$3");
+}
+
+
 exports.parseString = parseString;
 exports.parseArray 	= parseArray;
+exports.addCarat 	= addCarat;
