@@ -1,3 +1,5 @@
+'use strict';
+
 var parseString = function(string) {
 	if (typeof string !== 'string') {
 		return null;
@@ -27,7 +29,7 @@ var addCarat = function(string) {
 	var regex = /(%)([^\\;]+)(%)/g;
 
 	return string.replace(regex, "$1$2^$3");
-}
+};
 
 
 exports.parseString = parseString;
