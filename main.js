@@ -8,14 +8,14 @@ if (OperatingSystem.platform() != 'win32') {
 }
 
 try {
-	var CONF = require('./config/dev.js')
+	var CONF = require('./config/dev.js');
 }
 catch (e) {
 	try {
-		var CONF = require('./config/release.js')
+		var CONF = require('./config/release.js');
 	}
 	catch (e) {
-		var CONF = require('./config/setup.js')
+		var CONF = require('./config/setup.js');
 	}
 }
 
