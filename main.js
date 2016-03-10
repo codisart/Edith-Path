@@ -47,7 +47,7 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
 					Application.quit();
 				}
 				try {
-					var newPathStringValue = '"' + item.value + ';' + process.argv[1] + '"';
+          var newPathStringValue = '"\\"' + PathParser.addCarat(item.value) + ';' + process.argv[1] + '"\\""';
 					ChildProcess.exec("cd " + CONF.golang.path + " & edith-path.exe " + newPathStringValue, function (error, stdout, stderr) {
 						Application.quit();
 					});
@@ -104,7 +104,7 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
 	            if (!err) {
 	                try {
 	                    var pathArrayValue = PathParser.parseArray(arg);
-						var newPathStringValue = '"\"' + PathParser.addCarat(item.value) + ';' + pathArrayValue + '\""';
+                        var newPathStringValue = '"\\"' + PathParser.addCarat(item.value) + ';' + pathArrayValue + '"\\""';
 						ChildProcess.exec("cd " + CONF.golang.path + " & edith-path.exe " + newPathStringValue, function (error, stdout, stderr) {
 							if (error) {
 								console.log('exec error: ' + error);

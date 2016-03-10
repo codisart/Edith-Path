@@ -16,12 +16,12 @@ func main() {
 		}
 
 		defer registryKey.Close()
-
-		err2 := registryKey.SetExpandStringValue("testPath" , newPathStringValue)
+		newPathStringValue = newPathStringValue[1:len(newPathStringValue)-1]
+		err2 := registryKey.SetExpandStringValue("Path" , newPathStringValue)
 		if (err2 != nil) {
 			os.Exit(1)
 		}
-		
+
 		os.Exit(0)
 	}
 
