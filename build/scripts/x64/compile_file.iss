@@ -62,9 +62,9 @@ Name: "{commondesktop}\Edith Path"; Filename: "{app}\Edith-Path.exe"; Tasks: des
 
 [Registry]
 Root: HKCR; Subkey: "Directory\shell\Add to Path"; Flags: uninsdeletekeyifempty
-Root: HKCR; Subkey: "Directory\shell\Add to Path\command"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "{app}\Edith-Path.exe %1"
+Root: HKCR; Subkey: "Directory\shell\Add to Path\command"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: """{app}\Edith-Path.exe"" ""%1"""
 Root: HKCR; Subkey: "Directory\Background\shell\Add to Path"; Flags: uninsdeletekeyifempty
-Root: HKCR; Subkey: "Directory\Background\shell\Add to Path\command"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "{app}\Edith-Path.exe %V"
+Root: HKCR; Subkey: "Directory\Background\shell\Add to Path\command"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: """{app}\Edith-Path.exe"" ""%V"""
 
 [Run]
 Filename: "{app}\backup.bat"
