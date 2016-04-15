@@ -3,10 +3,6 @@
 var Application = require('app');  // Module to control application life.
 var OperatingSystem = require('os');
 
-if (OperatingSystem.platform() != 'win32') {
-    Application.quit();
-}
-
 try {
 	var CONF = require('./config/dev.js');
 }
@@ -17,6 +13,10 @@ catch (e) {
 	catch (e) {
 		var CONF = require('./config/setup.js');
 	}
+}
+
+if (!CONF.isDevelopmentEnvironment && OperatingSystem.platform() != 'win32') {
+    Application.quit();
 }
 
 var ChildProcess = require('child_process');
