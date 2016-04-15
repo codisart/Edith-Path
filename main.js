@@ -21,7 +21,12 @@ if (!CONF.isDevelopmentEnvironment && OperatingSystem.platform() != 'win32') {
 
 var ChildProcess = require('child_process');
 var FileSystem = require('fs');
-var Winreg = require('winreg');
+
+if (CONF.isDevelopmentEnvironment) {
+    var Winreg = require('./app/libs/stub/winreg');
+} else {
+    var Winreg = require('winreg');
+}
 
 var PathParser = require('./app/libs/path/parser');
 
