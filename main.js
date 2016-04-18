@@ -141,44 +141,38 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
             });
         });
 
-        function buildHtmlData(pathArrayValue) {
-            var folders = [];
-
-            var arrayLength = pathArrayValue.length;
-            for (var i = 0; i < arrayLength; i++) {
-                var folder = {
-                    path: pathArrayValue[i],
+        function buildHtmlData(folders) {
+            var promises = folders.map(function(folder) {
+                var objFolder = {
+                    path: folder,
                     exists: false,
                 };
-                folders.push(folder);
-            }
 
-            var promises = folders.map(function(folder) {
                 return new Promise(function (resolve, reject) {
-                    FileSystem.stat(folder.path, function(err, stats) {
+                    FileSystem.stat(objFolder.path, function(err, stats) {
                         if(err) {
-                            ChildProcess.exec("echo " + folder.path, function(stderr, stdout, err) {
-                                if (!err && folder.path != stdout.trim()) {
+                            ChildProcess.exec("echo " + objFolder.path, function(stderr, stdout, err) {
+                                if (!err && objFolder.path != stdout.trim()) {
                                     FileSystem.stat(stdout.trim(), function(err, stats) {
                                         if(err) {
-                                            folder.exists = false;
+                                            objFolder.exists = false;
                                         } else {
-                                            folder.exists = stats.isDirectory();
+                                            objFolder.exists = stats.isDirectory();
                                         }
                                         resolve(folder);
                                     });
                                 }
-                                folder.exists = false;
+                                objFolder.exists = false;
                                 resolve(folder);
                             });
                         } else {
-                            folder.exists = stats.isDirectory();
+                            objFolder.exists = stats.isDirectory();
                             resolve(folder);
                         }
                     });
                 }).then(
                     function (folder) {
-                        return folder;
+                        return objFolder;
                     }
                 );
             });
