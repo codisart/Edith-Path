@@ -95,11 +95,8 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
         webContents.on('did-finish-load', function() {
             regKey.get('Path', function(err, item) {
                 if (!err) {
-                    buildHtmlData(item.value).then(
-                        function (values) {
-                            webContents.send('data-folders', values);
-                        }
-                    );
+                    buildHtmlData(item.value)
+                        .then(transfersDataToView);
                 }
             });
         });
@@ -114,11 +111,8 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
                             if (error) {
                                 console.log('exec error: ' + error);
                             } else {
-                                buildHtmlData(item.value).then(
-                                    function (values) {
-                                        webContents.send('data-folders', values);
-                                    }
-                                );
+                                buildHtmlData(item.value)
+                                    .then(transfersDataToView);
                             }
                         });
                     }
@@ -132,11 +126,8 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
         IpcMain.on('refresh-folders', function(event, arg) {
             regKey.get('Path', function(err, item) {
                 if (!err) {
-                    buildHtmlData(item.value).then(
-                        function (values) {
-                            webContents.send('data-folders', values);
-                        }
-                    );
+                    buildHtmlData(item.value)
+                        .then(transfersDataToView);
                 }
             });
         });
@@ -180,6 +171,10 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
             });
 
             return Promise.all(promises);
+        }
+
+        function transfersDataToView(values) {
+            webContents.send('data-folders', values);
         }
 
         // Emitted when the window is closed.
