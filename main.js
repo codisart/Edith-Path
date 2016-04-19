@@ -95,7 +95,7 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
         webContents.on('did-finish-load', function() {
             regKey.get('Path', function(err, item) {
                 if (!err) {
-                    buildHtmlData(PathParser.parseString(item.value)).then(
+                    buildHtmlData(item.value).then(
                         function (values) {
                             webContents.send('data-folders', values);
                         }
@@ -114,7 +114,7 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
                             if (error) {
                                 console.log('exec error: ' + error);
                             } else {
-                                buildHtmlData(PathParser.parseString(item.value)).then(
+                                buildHtmlData(item.value).then(
                                     function (values) {
                                         webContents.send('data-folders', values);
                                     }
@@ -132,7 +132,7 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
         IpcMain.on('refresh-folders', function(event, arg) {
             regKey.get('Path', function(err, item) {
                 if (!err) {
-                    buildHtmlData(PathParser.parseString(item.value)).then(
+                    buildHtmlData(item.value).then(
                         function (values) {
                             webContents.send('data-folders', values);
                         }
@@ -141,7 +141,9 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
             });
         });
 
-        function buildHtmlData(folders) {
+        function buildHtmlData(PathValue) {
+            var folders = PathParser.parseString(PathValue);
+
             var promises = folders.map(function(folder) {
                 var objFolder = {
                     path: folder,
