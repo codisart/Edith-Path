@@ -9,7 +9,7 @@
     "url": "https://github.com/codisart/Edith-Path"
   },
   "dependencies": {
-    "winreg": "~1.1.0",
+    "winreg": "~1.2.0",
     "jquery": "~2.2.0"
   },
   "scripts": {
