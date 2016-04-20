@@ -44,6 +44,16 @@ h2 {
     padding: 0;
 }
 
+h3 {
+    font-size: 12px;
+    font-weight: 400;
+    height: 52px;
+    line-height : 52px;
+    margin: 0 0 0 4px;
+    padding: 0;
+    color : grey;
+}
+
 .window-tools {
     width : 120px;
 }
@@ -97,6 +107,10 @@ div.section-header {
     justify-content : space-between;
 }
 
+div.section-header--title {
+    display: flex;
+}
+
 div.refresh-list {
     height: 24px;
     width: 24px;
@@ -140,6 +154,10 @@ li.valid-path::before {
     width: 24px;
     background-repeat: no-repeat;
     background-image: url(../img/check.svg);
+}
+
+li.valid-path {
+    cursor: pointer;
 }
 
 li.invalid-path::before {

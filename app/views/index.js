@@ -2,8 +2,9 @@
 'use strict';
 
 const IpcRenderer = require('electron').ipcRenderer;
-var remote = require('remote');
-var dialog = remote.require('dialog');
+const Shell = require('electron').shell;
+var Remote = require('remote');
+var Dialog = Remote.require('dialog');
 window.$ = window.jQuery = require('jquery');
 
 var foldersToAdd = [];
@@ -34,15 +35,17 @@ IpcRenderer.on('data-folders', function(event, folders) {
 	if(arrayLength > 0) {
 		for (var i = 0; i < arrayLength; i++) {
 			var folderElementHtml = $('<li/>');
-			// var iconHtml = $('<i/>')
-			//     .attr('class', 'md-icon dp48');
 
 			if(folders[i].exists) {
-				// iconHtml.html('check_circle');
-				folderElementHtml.attr('class', 'valid-path icon-teal');
+				folderElementHtml
+                    .attr('class', 'valid-path icon-teal')
+                    .dblclick( function() {
+                        var thisFolder = $(this).html() + '/' + '.';
+                        Shell.showItemInFolder(thisFolder);
+                    });
 			} else {
-				// iconHtml.html('error');
-				folderElementHtml.attr('class', 'invalid-path icon-red');
+				folderElementHtml
+                    .attr('class', 'invalid-path icon-red');
 			}
 
 			folderElementHtml
@@ -57,7 +60,7 @@ IpcRenderer.on('data-folders', function(event, folders) {
 });
 
 $('.choose-folder').on('click', function() {
-	var folderPath = dialog.showOpenDialog({ properties: [ 'openDirectory']});
+	var folderPath = Dialog.showOpenDialog({ properties: [ 'openDirectory']});
 
 	if(folderPath.length > 0){
 		addFolder(folderPath[0]);
