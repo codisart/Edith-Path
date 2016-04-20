@@ -93,12 +93,7 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
         mainWindow.loadURL('file://' + __dirname + '/index.html');
 
         webContents.on('did-finish-load', function() {
-            regKey.get('Path', function(err, item) {
-                if (!err) {
-                    buildHtmlData(item.value)
-                        .then(transfersDataToView);
-                }
-            });
+            regKey.get('Path', sendListView);
         });
 
         IpcMain.on('add-folders', function(event, arg) {
@@ -124,12 +119,7 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
         });
 
         IpcMain.on('refresh-folders', function(event, arg) {
-            regKey.get('Path', function(err, item) {
-                if (!err) {
-                    buildHtmlData(item.value)
-                        .then(transfersDataToView);
-                }
-            });
+            regKey.get('Path', sendListView);
         });
 
         function buildHtmlData(PathValue) {
@@ -175,6 +165,13 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
 
         function transfersDataToView(values) {
             webContents.send('data-folders', values);
+        }
+
+        function sendListView(err, item) {
+            if (!err) {
+                buildHtmlData(item.value)
+                    .then(transfersDataToView);
+            }
         }
 
         // Emitted when the window is closed.
