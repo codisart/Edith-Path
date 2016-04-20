@@ -28,6 +28,13 @@ function addFolder(path) {
 	}
 }
 
+function makeDoubleClickHandler() {
+    return function() {
+        console.log('plop');
+        Shell.showItemInFolder(this.innerHTML + '/' + '.');
+    };
+}
+
 IpcRenderer.on('data-folders', function(event, folders) {
 	var arrayLength = folders.length;
 	var foldersListHtml = $('#folders-list').empty();
@@ -39,10 +46,7 @@ IpcRenderer.on('data-folders', function(event, folders) {
 			if(folders[i].exists) {
 				folderElementHtml
                     .attr('class', 'valid-path icon-teal')
-                    .dblclick( function() {
-                        var thisFolder = $(this).html() + '/' + '.';
-                        Shell.showItemInFolder(thisFolder);
-                    });
+                    .dblclick(makeDoubleClickHandler());
 			} else {
 				folderElementHtml
                     .attr('class', 'invalid-path icon-red');
