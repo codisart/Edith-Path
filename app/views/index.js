@@ -30,7 +30,6 @@ function addFolder(path) {
 
 function makeDoubleClickHandler() {
     return function() {
-        console.log('plop');
         Shell.showItemInFolder(this.innerHTML + '/' + '.');
     };
 }
@@ -54,7 +53,7 @@ IpcRenderer.on('data-folders', function(event, folders) {
 
             folderElementHtml
                 .html(folders[i].path);
-                // .prepend(iconHtml);
+
             $('.loader').hide();
             foldersListHtml.prepend(folderElementHtml);
         }
