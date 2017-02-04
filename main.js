@@ -1,6 +1,7 @@
 'use strict';
 
-var Application = require('app');  // Module to control application life.
+const electron = require('electron')
+var Application = electron.app;  // Module to control application life.
 var OperatingSystem = require('os');
 
 try {
@@ -64,8 +65,8 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
         }
     });
 } else {
-    var BrowserWindow = require('browser-window');  // Module to create native browser window.
-    const IpcMain = require('electron').ipcMain;
+    const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
+    const IpcMain       = electron.ipcMain;
 
     // Keep a global reference of the window object, if you don't, the window will
     // be closed automatically when the JavaScript object is garbage collected.
@@ -81,12 +82,11 @@ if (process.argv[1] && process.argv[0].toLowerCase().substr(-executableName.leng
     Application.on('ready', function() {
         // Create the browser window.
         mainWindow = new BrowserWindow({
-            width: 750,
+            width : 750,
             height: 650,
-            icon: 'img/icon.png',
+            icon  : 'img/icon.png',
         });
         // mainWindow.setResizable(false);
-
         var webContents = mainWindow.webContents;
 
         // and load the index.html of the app.
