@@ -87,8 +87,9 @@ div.choose-folder {
     background-image: url(../img/add.svg);
     background-position: -5px -55px;
     background-size: 50px;
+    background-color: #00796B;
 
-    border-radius: 40px;
+    /*border-radius: 40px;*/
     cursor: pointer;
 
     height: 40px;

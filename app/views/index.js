@@ -2,9 +2,8 @@
 'use strict';
 
 const IpcRenderer = require('electron').ipcRenderer;
-const Shell = require('electron').shell;
-var Remote = require('remote');
-var Dialog = Remote.require('dialog');
+const Shell       = require('electron').shell;
+const Dialog      = require('electron').remote.dialog;
 window.$ = window.jQuery = require('jquery');
 
 var foldersToAdd = [];
