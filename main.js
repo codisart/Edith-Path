@@ -1,6 +1,6 @@
 'use strict';
 
-const electron = require('electron')
+const electron = require('electron');
 var Application = electron.app;  // Module to control application life.
 var OperatingSystem = require('os');
 
